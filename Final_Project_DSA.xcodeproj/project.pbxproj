@@ -1,0 +1,786 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		6FDA779BC8B8BEBC312DDD27 /* ZERO_CHECK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B40AF041F29E4FB3BB2F0725 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildPhases = (
+				F7E3378E1C10615FB3CBF35B /* Generate CMakeFiles/ZERO_CHECK */,
+			);
+			dependencies = (
+			);
+			name = ZERO_CHECK;
+			productName = ZERO_CHECK;
+		};
+		90CE1B81896BF0275E049DC4 /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 084F9F41674A4D14871E9E1C /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				37F9CA6E5B407A165814FB14 /* Generate CMakeFiles/ALL_BUILD */,
+			);
+			dependencies = (
+				7759F44BBEE84C32ABB68E05 /* PBXTargetDependency */,
+				6FD013D68823479F91264965 /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		0507CE5FC6BF4E26B78112BF /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/Node.h */ = {isa = PBXBuildFile; fileRef = 9C65E939872443ED911C6CAD /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/Node.h */; };
+		25D2AB7FA98740329F43169B /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/utils/FileHandler.h */ = {isa = PBXBuildFile; fileRef = A2B9C30F3C0F42A89CE79269 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/utils/FileHandler.h */; };
+		431912B80908497BA5D9EB5D /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/utils/DataGenerator.h */ = {isa = PBXBuildFile; fileRef = 042D34236598450E8F3E94EE /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/utils/DataGenerator.h */; };
+		67D1042FADAF4939ADD70607 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/models/Student.h */ = {isa = PBXBuildFile; fileRef = 8049636429464C508C7F4AFC /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/models/Student.h */; };
+		6FC2ECD295AF4C69A1DF75FB /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/LinkedList.h */ = {isa = PBXBuildFile; fileRef = EB734F6E28FA4C91B9A3E999 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/LinkedList.h */; };
+		705E19E8CD4746219C77CE6F /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/core/StudentManager.h */ = {isa = PBXBuildFile; fileRef = BAA858F07EF14BE59F95D78F /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/core/StudentManager.h */; };
+		7241DEE858744E17BF6E6251 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/HashMap.h */ = {isa = PBXBuildFile; fileRef = B3C9164B17E449359143C85B /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/HashMap.h */; };
+		C5C3B8E40EC24F1989CF5F5D /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 6E2C0CFD7AC44C61AB4FD257 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/CMakeLists.txt */; };
+		F1700E5028514867B824ABFB /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/main.cpp */ = {isa = PBXBuildFile; fileRef = 5CBBAB6220F34C128541D059 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildStyle section */
+		1C34E1450C2343AC8FE5E93F /* Debug */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		49B5544311FB47B9A1ED6BB8 /* RelWithDebInfo */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = RelWithDebInfo;
+		};
+		7928BB50C7754A5CBAFF993D /* Release */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Release;
+		};
+		902CD8A3AD4841BC9B5307C0 /* MinSizeRel */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = MinSizeRel;
+		};
+/* End PBXBuildStyle section */
+
+/* Begin PBXContainerItemProxy section */
+		02CF980AD3ED4A43881219DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F57F4F3E66584459BEEF9020 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6FDA779BC8B8BEBC312DDD27;
+			remoteInfo = ZERO_CHECK;
+		};
+		15794033C57C421EB3EC8357 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F57F4F3E66584459BEEF9020 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 36A6D5C637F36A8E4820DC1C;
+			remoteInfo = Final_Project_DSA;
+		};
+		1D39A507A5A64D1BB316F499 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F57F4F3E66584459BEEF9020 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6FDA779BC8B8BEBC312DDD27;
+			remoteInfo = ZERO_CHECK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		042D34236598450E8F3E94EE /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/utils/DataGenerator.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = DataGenerator.h; path = utils/DataGenerator.h; sourceTree = SOURCE_ROOT; };
+		5CBBAB6220F34C128541D059 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/main.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = main.cpp; path = main.cpp; sourceTree = SOURCE_ROOT; };
+		6E2C0CFD7AC44C61AB4FD257 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		8049636429464C508C7F4AFC /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/models/Student.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = Student.h; path = models/Student.h; sourceTree = SOURCE_ROOT; };
+		889737230C0249AE8E9FD192 /* Final_Project_DSA */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = Final_Project_DSA; sourceTree = BUILT_PRODUCTS_DIR; };
+		93B188C159564EDF834CB372 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		9C65E939872443ED911C6CAD /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/Node.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = Node.h; path = datastructures/Node.h; sourceTree = SOURCE_ROOT; };
+		A2B9C30F3C0F42A89CE79269 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/utils/FileHandler.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = FileHandler.h; path = utils/FileHandler.h; sourceTree = SOURCE_ROOT; };
+		B3C9164B17E449359143C85B /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/HashMap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = HashMap.h; path = datastructures/HashMap.h; sourceTree = SOURCE_ROOT; };
+		BAA858F07EF14BE59F95D78F /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/core/StudentManager.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = StudentManager.h; path = core/StudentManager.h; sourceTree = SOURCE_ROOT; };
+		EB734F6E28FA4C91B9A3E999 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/LinkedList.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = LinkedList.h; path = datastructures/LinkedList.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5C6B61E3D9D64A5D84E8E1C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		264FF75CB8E84BADAA5E97E4 /* datastructures */ = {
+			isa = PBXGroup;
+			children = (
+				B3C9164B17E449359143C85B /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/HashMap.h */,
+				EB734F6E28FA4C91B9A3E999 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/LinkedList.h */,
+				9C65E939872443ED911C6CAD /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/datastructures/Node.h */,
+			);
+			name = datastructures;
+			sourceTree = "<group>";
+		};
+		289A049B282044D9B570439C /* Final_Project_DSA */ = {
+			isa = PBXGroup;
+			children = (
+				88F90CD8385F49DBA67B0F9F /* Source Files */,
+				FD92B3F2858749B4B7474F45 /* core */,
+				264FF75CB8E84BADAA5E97E4 /* datastructures */,
+				40F76D91A5EE4630A4AAB0F2 /* models */,
+				53EE9541C94344C3B19DCEBA /* utils */,
+				6E2C0CFD7AC44C61AB4FD257 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/CMakeLists.txt */,
+			);
+			name = Final_Project_DSA;
+			sourceTree = "<group>";
+		};
+		40F76D91A5EE4630A4AAB0F2 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				8049636429464C508C7F4AFC /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/models/Student.h */,
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
+		418D2BFFC5B94CB1ACE34816 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		53EE9541C94344C3B19DCEBA /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				042D34236598450E8F3E94EE /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/utils/DataGenerator.h */,
+				A2B9C30F3C0F42A89CE79269 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/utils/FileHandler.h */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		88F90CD8385F49DBA67B0F9F /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				5CBBAB6220F34C128541D059 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/main.cpp */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		8CBFD62B7F4A4F569935546A /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				A3551D0864F94DC1B79F2733 /* CMake Rules */,
+				93B188C159564EDF834CB372 /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+		91109412B3064321A154ECE2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A3551D0864F94DC1B79F2733 /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		ABA803C0005A46869DAC48F0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				889737230C0249AE8E9FD192 /* Final_Project_DSA */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F7A319A0330D4DB6B9A3A767 = {
+			isa = PBXGroup;
+			children = (
+				8CBFD62B7F4A4F569935546A /* ALL_BUILD */,
+				289A049B282044D9B570439C /* Final_Project_DSA */,
+				ABA803C0005A46869DAC48F0 /* Products */,
+				91109412B3064321A154ECE2 /* Frameworks */,
+				418D2BFFC5B94CB1ACE34816 /* Resources */,
+			);
+			sourceTree = "<group>";
+		};
+		FD92B3F2858749B4B7474F45 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				BAA858F07EF14BE59F95D78F /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/core/StudentManager.h */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		36A6D5C637F36A8E4820DC1C /* Final_Project_DSA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CC1AC9ACF4E4302A73E57DE /* Build configuration list for PBXNativeTarget "Final_Project_DSA" */;
+			buildPhases = (
+				03F681CBCC7D480699F790B5 /* Sources */,
+				5C6B61E3D9D64A5D84E8E1C2 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04C930EB08F44B28BD54D010 /* PBXTargetDependency */,
+			);
+			name = Final_Project_DSA;
+			productName = Final_Project_DSA;
+			productReference = 889737230C0249AE8E9FD192 /* Final_Project_DSA */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F57F4F3E66584459BEEF9020 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2650;
+			};
+			buildConfigurationList = E7CEC2D64ABD49A284A84E66 /* Build configuration list for PBXProject "Final_Project_DSA" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				1C34E1450C2343AC8FE5E93F /* Debug */,
+				7928BB50C7754A5CBAFF993D /* Release */,
+				902CD8A3AD4841BC9B5307C0 /* MinSizeRel */,
+				49B5544311FB47B9A1ED6BB8 /* RelWithDebInfo */,
+			);
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 0;
+			mainGroup = F7A319A0330D4DB6B9A3A767;
+			projectDirPath = .;
+			projectRoot = "";
+			targets = (
+				90CE1B81896BF0275E049DC4 /* ALL_BUILD */,
+				36A6D5C637F36A8E4820DC1C /* Final_Project_DSA */,
+				6FDA779BC8B8BEBC312DDD27 /* ZERO_CHECK */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		37F9CA6E5B407A165814FB14 /* Generate CMakeFiles/ALL_BUILD */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ALL_BUILD";
+			outputPaths = (
+"/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/CMakeFiles/ALL_BUILD"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd \"/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA\"
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd \"/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA\"
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd \"/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA\"
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd \"/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA\"
+  echo Build\\ all\\ projects
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		3C0110FC8322DE7E50886E21 = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		9B50530E35CC49C82C2FACCF = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		F7E3378E1C10615FB3CBF35B /* Generate CMakeFiles/ZERO_CHECK */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ZERO_CHECK";
+			outputPaths = (
+"/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/CMakeFiles/ZERO_CHECK"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd \"/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA\"
+  make -f /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive\\ của\\ tôi/Shared/20252/MI3060_Cấu\\ trúc\\ dữ\\ lệu\\ và\\ giải\\ thuật/Final_Project_DSA/Final_Project_DSA/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd \"/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA\"
+  make -f /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive\\ của\\ tôi/Shared/20252/MI3060_Cấu\\ trúc\\ dữ\\ lệu\\ và\\ giải\\ thuật/Final_Project_DSA/Final_Project_DSA/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd \"/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA\"
+  make -f /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive\\ của\\ tôi/Shared/20252/MI3060_Cấu\\ trúc\\ dữ\\ lệu\\ và\\ giải\\ thuật/Final_Project_DSA/Final_Project_DSA/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd \"/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA\"
+  make -f /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive\\ của\\ tôi/Shared/20252/MI3060_Cấu\\ trúc\\ dữ\\ lệu\\ và\\ giải\\ thuật/Final_Project_DSA/Final_Project_DSA/CMakeScripts/ReRunCMake.make
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		03F681CBCC7D480699F790B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1700E5028514867B824ABFB /* /Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/main.cpp */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		04C930EB08F44B28BD54D010 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6FDA779BC8B8BEBC312DDD27 /* ZERO_CHECK */;
+			targetProxy = 1D39A507A5A64D1BB316F499 /* PBXContainerItemProxy */;
+		};
+		6FD013D68823479F91264965 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6FDA779BC8B8BEBC312DDD27 /* ZERO_CHECK */;
+			targetProxy = 02CF980AD3ED4A43881219DE /* PBXContainerItemProxy */;
+		};
+		7759F44BBEE84C32ABB68E05 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 36A6D5C637F36A8E4820DC1C /* Final_Project_DSA */;
+			targetProxy = 15794033C57C421EB3EC8357 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		35C2FE4A014B49AB80481FBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/Debug";
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = "   '-std=gnu++11' ";
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Final_Project_DSA;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/build/Final_Project_DSA.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		3D50A7C4305E4724879052F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				SDKROOT = "";
+				SYMROOT = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/build";
+			};
+			name = Debug;
+		};
+		3E253E2812AB47DFBF98DD45 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				SDKROOT = "";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/build";
+			};
+			name = RelWithDebInfo;
+		};
+		5D5CE77C04AF433A8D2831AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		5F3430313327464D9C328561 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		65D1BC18A58D4CBC920071A0 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				SDKROOT = "";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/build";
+			};
+			name = MinSizeRel;
+		};
+		67452AC762824783B71EE5A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/Release";
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++11' ";
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Final_Project_DSA;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/build/Final_Project_DSA.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		696A67ADC6464F798E032B58 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		84126D9E28C6415D9CF12E0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		8C44BA7EF8E146DCAEC777AA /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/MinSizeRel";
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++11' ";
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Final_Project_DSA;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/build/Final_Project_DSA.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		9E8EA415F3F74D328D47124E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				SDKROOT = "";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/build";
+			};
+			name = Release;
+		};
+		CF3AF409BFF8463E88D06162 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		CFD9455DF3AA474E88D35091 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		ED590D9EE1FA4F5C8418098D /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/RelWithDebInfo";
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = "       -DNDEBUG '-std=gnu++11' ";
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Final_Project_DSA;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/nguyenquanganh/Library/CloudStorage/GoogleDrive-quanganhnguyen2405@gmail.com/Drive của tôi/Shared/20252/MI3060_Cấu trúc dữ lệu và giải thuật/Final_Project_DSA/Final_Project_DSA/build/Final_Project_DSA.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		EFDF1CBB5FE74AD7A672AA23 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		F36DF4282A7049D5BE7A624C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		084F9F41674A4D14871E9E1C /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EFDF1CBB5FE74AD7A672AA23 /* Debug */,
+				F36DF4282A7049D5BE7A624C /* Release */,
+				696A67ADC6464F798E032B58 /* MinSizeRel */,
+				5F3430313327464D9C328561 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4CC1AC9ACF4E4302A73E57DE /* Build configuration list for PBXNativeTarget "Final_Project_DSA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35C2FE4A014B49AB80481FBE /* Debug */,
+				67452AC762824783B71EE5A8 /* Release */,
+				8C44BA7EF8E146DCAEC777AA /* MinSizeRel */,
+				ED590D9EE1FA4F5C8418098D /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B40AF041F29E4FB3BB2F0725 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D5CE77C04AF433A8D2831AA /* Debug */,
+				84126D9E28C6415D9CF12E0C /* Release */,
+				CFD9455DF3AA474E88D35091 /* MinSizeRel */,
+				CF3AF409BFF8463E88D06162 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E7CEC2D64ABD49A284A84E66 /* Build configuration list for PBXProject "Final_Project_DSA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D50A7C4305E4724879052F6 /* Debug */,
+				9E8EA415F3F74D328D47124E /* Release */,
+				65D1BC18A58D4CBC920071A0 /* MinSizeRel */,
+				3E253E2812AB47DFBF98DD45 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F57F4F3E66584459BEEF9020 /* Project object */;
+}
