@@ -4,30 +4,28 @@
 #include "LinkedList.h"
 #include <string>
 
-// Forward declaration of Student to avoid circular dependency
-class Student;
-
+template <typename K, typename V>
 struct HashEntry {
-    std::string key;
-    Student* value;
+    K key;
+    V value;
 
-    HashEntry() : key(""), value(nullptr) {}
-    HashEntry(std::string k, Student* v) : key(k), value(v) {}
+    HashEntry() : key(K()), value(V()) {}
+    HashEntry(K k, V v) : key(k), value(v) {}
 
     // Overloaded == operator compares only the keys.
-    // This allows LinkedList<HashEntry>::remove and search to work perfectly.
     bool operator==(const HashEntry& other) const {
         return this->key == other.key;
     }
 };
 
+template <typename K, typename V>
 class HashMap {
 private:
-    static const size_t BUCKET_COUNT = 10007; // Prime number for 10k records to minimize collisions
-    LinkedList<HashEntry> buckets[BUCKET_COUNT];
+    static const size_t BUCKET_COUNT = 10007; // Prime number
+    LinkedList<HashEntry<K, V>> buckets[BUCKET_COUNT];
     size_t size;
 
-    // DJB2 Hash Algorithm: Highly efficient with low collision rates for strings
+    // DJB2 Hash Algorithm for std::string keys
     size_t hashFunction(const std::string& key) const {
         size_t hash = 5381;
         for (char c : key) {
@@ -54,10 +52,10 @@ public:
         size = 0;
     }
 
-    // Insert or update key-value pair. Returns true if new element added, false if updated.
-    bool put(const std::string& key, Student* value) {
+    // Insert or update key-value pair. Returns true if new element added.
+    bool put(const K& key, V value) {
         size_t index = hashFunction(key);
-        Node<HashEntry>* current = buckets[index].getHead();
+        Node<HashEntry<K, V>>* current = buckets[index].getHead();
         
         while (current != nullptr) {
             if (current->data.key == key) {
@@ -68,15 +66,15 @@ public:
         }
 
         // Key does not exist, insert at head
-        buckets[index].insertAtHead(HashEntry(key, value));
+        buckets[index].insertAtHead(HashEntry<K, V>(key, value));
         size++;
         return true;
     }
 
-    // Retrieve value by key. Returns nullptr if not found.
-    Student* get(const std::string& key) const {
+    // Retrieve value by key. Returns default V (e.g. nullptr) if not found.
+    V get(const K& key) const {
         size_t index = hashFunction(key);
-        Node<HashEntry>* current = buckets[index].getHead();
+        Node<HashEntry<K, V>>* current = buckets[index].getHead();
         
         while (current != nullptr) {
             if (current->data.key == key) {
@@ -84,14 +82,13 @@ public:
             }
             current = current->next;
         }
-        return nullptr;
+        return V(); // default (nullptr for pointer)
     }
 
-    // Remove entry by key. Returns true if found and removed, false otherwise.
-    bool remove(const std::string& key) {
+    // Remove entry by key
+    bool remove(const K& key) {
         size_t index = hashFunction(key);
-        // Uses the overloaded == operator in HashEntry (which compares key)
-        if (buckets[index].remove(HashEntry(key, nullptr))) {
+        if (buckets[index].remove(HashEntry<K, V>(key, V()))) {
             size--;
             return true;
         }
@@ -106,7 +103,20 @@ public:
         return size == 0;
     }
     
-    // For debug/QC: count total collisions
+    // Iterate through all values and return them in a newly constructed LinkedList
+    // (Caller must manage the returned list memory)
+    LinkedList<V>* values() const {
+        LinkedList<V>* list = new LinkedList<V>();
+        for (size_t i = 0; i < BUCKET_COUNT; ++i) {
+            Node<HashEntry<K, V>>* current = buckets[i].getHead();
+            while (current != nullptr) {
+                list->insertAtTail(current->data.value);
+                current = current->next;
+            }
+        }
+        return list;
+    }
+
     size_t getCollisionCount() const {
         size_t collisions = 0;
         for (size_t i = 0; i < BUCKET_COUNT; ++i) {

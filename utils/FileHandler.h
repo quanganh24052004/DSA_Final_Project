@@ -2,130 +2,223 @@
 #define FILEHANDLER_H
 
 #include "../core/StudentManager.h"
-#include "../models/Student.h"
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 class FileHandler {
+private:
+    // Hàm phân tách dòng CSV, bỏ qua dấu phẩy nếu nó nằm trong ngoặc kép " "
+    static std::vector<std::string> parseCSVLine(const std::string& line) {
+        std::vector<std::string> result;
+        std::string cell = "";
+        bool inQuotes = false;
+        
+        for (char c : line) {
+            if (c == '\"') {
+                inQuotes = !inQuotes; // Đảo trạng thái nếu gặp ngoặc kép
+            } else if (c == ',' && !inQuotes) {
+                // Trim whitespace optional
+                result.push_back(cell);
+                cell = "";
+            } else {
+                cell += c;
+            }
+        }
+        result.push_back(cell);
+        return result;
+    }
+
+    // Hàm làm sạch MSSV bị lỗi ".0" từ Excel
+    static std::string cleanMSSV(std::string mssv) {
+        if (mssv.length() > 2 && mssv.substr(mssv.length() - 2) == ".0") {
+            return mssv.substr(0, mssv.length() - 2);
+        }
+        return mssv;
+    }
+
 public:
-    // Load student records from CSV. Returns true if successfully loaded, false otherwise.
-    static bool loadData(const std::string& filePath, StudentManager& manager) {
+    static bool loadNganhHoc(const std::string& filePath, StudentManager& manager) {
         std::ifstream file(filePath);
         if (!file.is_open()) {
-            std::cerr << "Loi: Khong the mo file de doc: " << filePath << std::endl;
+            std::cerr << "Loi: Khong the mo file NganhHoc: " << filePath << std::endl;
             return false;
         }
 
         std::string line;
-        // Read header line
-        if (!std::getline(file, line)) {
-            std::cerr << "Loi: File rong!" << std::endl;
-            file.close();
-            return false;
-        }
-
-        // Check if it's a valid CSV header (contains "MSSV" or similar)
-        if (line.find("MSSV") == std::string::npos) {
-            // Not a header or incorrect format, let's reset to beginning
-            file.seekg(0);
-        }
+        if (!std::getline(file, line)) return false;
 
         size_t loadedCount = 0;
-        size_t errorCount = 0;
-        size_t duplicateCount = 0;
-
         while (std::getline(file, line)) {
-            if (line.empty()) continue;
-
-            std::stringstream ss(line);
-            std::string fields[18];
-            std::string temp;
-            int idx = 0;
-
-            // Split by comma
-            while (std::getline(ss, temp, ',') && idx < 18) {
-                fields[idx++] = temp;
-            }
-
-            // If we don't have exactly 18 fields, skip and log error
-            if (idx < 18) {
-                std::cerr << "Canh bao: Dong khong du 18 truong du lieu. Bo qua. Noi dung: " << line.substr(0, 50) << "..." << std::endl;
-                errorCount++;
-                continue;
-            }
+            if (line.empty() || line[0] == '\r') continue;
+            std::vector<std::string> fields = parseCSVLine(line);
+            if (fields.size() < 3) continue;
 
             try {
-                std::string mssv = fields[0];
-                std::string fullName = fields[1];
-                std::string classCode = fields[2];
-                std::string dob = fields[3];
-                std::string hometown = fields[4];
-                std::string gender = fields[5];
-                std::string admMethod = fields[6];
-                double admScore = std::stod(fields[7]);
-                std::string email = fields[8];
-                std::string phone = fields[9];
-                std::string address = fields[10];
-                std::string major = fields[11];
-                std::string department = fields[12];
-                std::string status = fields[13];
-                int enrollYear = std::stoi(fields[14]);
-                double gpa = std::stod(fields[15]);
-                int credits = std::stoi(fields[16]);
-                std::string advisor = fields[17];
-
-                Student* s = new Student(mssv, fullName, classCode, dob, hometown, gender, 
-                                         admMethod, admScore, email, phone, address, 
-                                         major, department, status, enrollYear, gpa, 
-                                         credits, advisor);
-
-                if (!manager.addStudent(s)) {
-                    // Duplicate MSSV
-                    delete s; // Free memory immediately
-                    duplicateCount++;
-                } else {
-                    loadedCount++;
-                }
-
-            } catch (const std::exception& e) {
-                std::cerr << "Loi phan tich o dong: " << line.substr(0, 50) << "... - Chi tiet: " << e.what() << std::endl;
-                errorCount++;
-            }
+                NganhHoc* nh = new NganhHoc(fields[0], fields[1], std::stof(fields[2]));
+                if (manager.addNganhHoc(nh)) loadedCount++;
+                else delete nh;
+            } catch (...) {}
         }
-
-        file.close();
-        std::cout << "Ket qua tai du lieu:" << std::endl;
-        std::cout << " - Thanh cong: " << loadedCount << " sinh vien." << std::endl;
-        if (duplicateCount > 0) std::cout << " - Trung MSSV (Bo qua): " << duplicateCount << " sinh vien." << std::endl;
-        if (errorCount > 0) std::cout << " - Loi dinh dang (Bo qua): " << errorCount << " dong." << std::endl;
-        
+        std::cout << "-> Da tai " << loadedCount << " Nganh Hoc tu " << filePath << std::endl;
         return true;
     }
 
-    // Save student records to CSV. Returns true if successfully saved, false otherwise.
-    static bool saveData(const std::string& filePath, const StudentManager& manager) {
-        std::ofstream file(filePath);
+    static bool loadHocPhan(const std::string& filePath, StudentManager& manager) {
+        std::ifstream file(filePath);
         if (!file.is_open()) {
-            std::cerr << "Loi: Khong the mo file de ghi: " << filePath << std::endl;
+            std::cerr << "Loi: Khong the mo file HocPhan: " << filePath << std::endl;
             return false;
         }
 
-        // Write header
-        file << "MSSV,FullName,ClassCode,DateOfBirth,Hometown,Gender,AdmissionMethod,AdmissionScore,Email,PhoneNumber,Address,Major,Department,AcademicStatus,EnrollmentYear,GPA,AccumulatedCredits,Advisor\n";
+        std::string line;
+        if (!std::getline(file, line)) return false;
 
-        size_t savedCount = 0;
-        Node<Student*>* current = manager.getAllClasses().getHead();
-        while (current != nullptr) {
-            file << current->data->toCSV() << "\n";
-            savedCount++;
-            current = current->next;
+        size_t loadedCount = 0;
+        while (std::getline(file, line)) {
+            if (line.empty() || line[0] == '\r') continue;
+            std::vector<std::string> fields = parseCSVLine(line);
+            if (fields.size() < 4) continue; 
+
+            try {
+                int stc = fields[2].empty() ? 0 : std::stoi(fields[2]);
+                int stc_hp = fields[3].empty() ? 0 : std::stoi(fields[3]);
+                HocPhan* hp = new HocPhan(fields[0], fields[1], stc, stc_hp);
+                if (manager.addHocPhan(hp)) loadedCount++;
+                else delete hp;
+            } catch (...) {}
+        }
+        std::cout << "-> Da tai " << loadedCount << " Hoc Phan tu " << filePath << std::endl;
+        return true;
+    }
+
+    static bool loadSinhVien(const std::string& filePath, StudentManager& manager) {
+        std::ifstream file(filePath);
+        if (!file.is_open()) {
+            std::cerr << "Loi: Khong the mo file SinhVien: " << filePath << std::endl;
+            return false;
         }
 
-        file.close();
-        std::cout << "Ghi thanh cong " << savedCount << " sinh vien vao file: " << filePath << std::endl;
+        std::string line;
+        if (!std::getline(file, line)) return false;
+
+        size_t loadedCount = 0;
+        while (std::getline(file, line)) {
+            if (line.empty() || line[0] == '\r') continue;
+            std::vector<std::string> fields = parseCSVLine(line);
+            if (fields.size() < 17) continue;
+
+            try {
+                std::string mssv = cleanMSSV(fields[0]);
+                SinhVien* sv = nullptr;
+
+                if (fields.size() >= 18) {
+                    // Format file that (co 18 cot, cot 3 la Nganh hoc bi thua)
+                    int namNhapHoc = fields[7].empty() ? 0 : static_cast<int>(std::stof(fields[7]));
+                    sv = new SinhVien(
+                        mssv, fields[1], fields[2], fields[4], fields[5], fields[6], 
+                        namNhapHoc, fields[8], fields[9], fields[10], fields[11], 
+                        fields[12], fields[13], fields[14], fields[15], fields[16], fields[17]
+                    );
+                } else {
+                    // Format file mock data (17 cot)
+                    int namNhapHoc = fields[6].empty() ? 0 : std::stoi(fields[6]);
+                    sv = new SinhVien(
+                        mssv, fields[1], fields[2], fields[3], fields[4], fields[5], 
+                        namNhapHoc, fields[7], fields[8], fields[9], fields[10], 
+                        fields[11], fields[12], fields[13], fields[14], fields[15], fields[16]
+                    );
+                }
+
+                if (sv != nullptr) {
+                    if (manager.addSinhVien(sv)) {
+                        loadedCount++;
+                    } else {
+                        delete sv;
+                    }
+                }
+            } catch (...) {}
+        }
+        std::cout << "-> Da tai " << loadedCount << " Sinh Vien tu " << filePath << std::endl;
+        return true;
+    }
+
+    // Thêm tham số defaultMaHP để cứu cánh cho file điểm bị khuyết mã HP
+    static bool loadDiem(const std::string& filePath, StudentManager& manager, const std::string& defaultMaHP) {
+        std::ifstream file(filePath);
+        if (!file.is_open()) {
+            std::cerr << "Loi: Khong the mo file Diem: " << filePath << std::endl;
+            return false;
+        }
+
+        std::string line;
+        if (!std::getline(file, line)) return false; 
+
+        size_t loadedCount = 0;
+        while (std::getline(file, line)) {
+            if (line.empty() || line[0] == '\r') continue;
+            std::vector<std::string> fields = parseCSVLine(line);
+            
+            // Expected format could vary, but according to user's real data:
+            // MaHP = row[0], MaLop = row[2], MSSV = row[3]
+            // DiemQTr = row[7], DiemCK = row[8], DiemHP = row[9], DiemChu = row[10], Thang4 = row[11]
+            // But my existing Mock Data is: MSSV,MaLop,MaHP,DiemQTr,DiemCK,DiemHP,DiemChu,Thang4
+            // Wait, the user's snippet says:
+            // string maHP = row[0].empty() ? defaultMaHP : row[0];
+            // string maLop = row[2];
+            // string mssv = cleanMSSV(row[3]);
+            // float diemQTr = row[7]
+            
+            // Because my program also needs to load my Mock Data, I will adapt based on the number of columns.
+            // If the user uses their real files, they might have 12+ columns.
+            // My Mock Data has 8 columns: MSSV (0), MaLop (1), MaHP (2), DiemQTr (3), DiemCK (4), DiemHP (5), DiemChu (6), Thang4 (7)
+            
+            if (fields.size() >= 12) {
+                // Parse user's real file format
+                try {
+                    std::string maHP = fields[0].empty() ? defaultMaHP : fields[0];
+                    std::string maLop = fields[2];
+                    std::string mssv = cleanMSSV(fields[3]);
+                    
+                    float diemQTr = fields[7].empty() ? 0.0f : std::stof(fields[7]);
+                    float diemCK  = fields[8].empty() ? 0.0f : std::stof(fields[8]);
+                    float diemHP  = fields[9].empty() ? 0.0f : std::stof(fields[9]);
+                    std::string diemChu = fields[10];
+                    float thang4  = fields[11].empty() ? 0.0f : std::stof(fields[11]);
+                    
+                    SinhVien* sv = manager.findSinhVienByMSSV(mssv);
+                    if (sv != nullptr) {
+                        KetQuaHocTap* kq = new KetQuaHocTap(maLop, maHP, diemQTr, diemCK, diemHP, diemChu, thang4);
+                        sv->themKetQuaHocTap(kq);
+                        loadedCount++;
+                    }
+                } catch (...) {}
+            } else if (fields.size() >= 8) {
+                // Parse Mock Data format
+                try {
+                    std::string mssv = cleanMSSV(fields[0]);
+                    std::string maLop = fields[1];
+                    std::string maHP = fields[2].empty() ? defaultMaHP : fields[2];
+                    
+                    float diemQTr = fields[3].empty() ? 0.0f : std::stof(fields[3]);
+                    float diemCK  = fields[4].empty() ? 0.0f : std::stof(fields[4]);
+                    float diemHP  = fields[5].empty() ? 0.0f : std::stof(fields[5]);
+                    std::string diemChu = fields[6];
+                    float thang4  = fields[7].empty() ? 0.0f : std::stof(fields[7]);
+                    
+                    SinhVien* sv = manager.findSinhVienByMSSV(mssv);
+                    if (sv != nullptr) {
+                        KetQuaHocTap* kq = new KetQuaHocTap(maLop, maHP, diemQTr, diemCK, diemHP, diemChu, thang4);
+                        sv->themKetQuaHocTap(kq);
+                        loadedCount++;
+                    }
+                } catch (...) {}
+            }
+        }
+        std::cout << "-> Da tai " << loadedCount << " ban ghi Diem tu " << filePath << std::endl;
         return true;
     }
 };

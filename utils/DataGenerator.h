@@ -9,107 +9,99 @@
 
 class DataGenerator {
 public:
-    static bool generateSampleCSV(const std::string& filePath, size_t recordCount) {
-        std::ofstream outFile(filePath);
-        if (!outFile.is_open()) {
-            std::cerr << "Khong the mo file de ghi: " << filePath << std::endl;
-            return false;
-        }
-
-        // Write CSV Header matching the 18 fields
-        outFile << "MSSV,FullName,ClassCode,DateOfBirth,Hometown,Gender,AdmissionMethod,AdmissionScore,Email,PhoneNumber,Address,Major,Department,AcademicStatus,EnrollmentYear,GPA,AccumulatedCredits,Advisor\n";
-
-        // Seed random generator
+    static bool generateMockData(size_t recordCount) {
         std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
-        // Predefined arrays of realistic data for randomized synthesis
-        const std::string listHo[] = {"Nguyen", "Tran", "Le", "Pham", "Hoang", "Phan", "Vu", "Dang", "Bui", "Do", "Ho", "Ngo", "Duong", "Ly"};
-        const std::string listDem[] = {"Van", "Thi", "Quang", "Minh", "Quoc", "Anh", "Duc", "Ngoc", "Duy", "Huu", "Tuan", "Xuan", "Hai", "Thanh"};
-        const std::string listTen[] = {"Anh", "Binh", "Cuong", "Dung", "Dong", "Giang", "Hai", "Hung", "Huy", "Khoa", "Linh", "Long", "Nam", "Phong", "Phuc", "Quan", "Son", "Tuan", "Viet", "Vy", "Trang", "Phuong", "Oanh", "Mai", "Hanh", "Yen"};
-        
-        const std::string listLop[] = {"CNPM01-K68", "KHMT02-K68", "HTTT01-K68", "ATTT03-K68", "DTVT01-K68", "CTTT02-K68", "CNPM02-K67", "KHMT01-K67"};
-        const std::string listTinh[] = {"Ha Noi", "Hai Phong", "Da Nang", "Quang Ninh", "Nghe An", "Ha Tinh", "Thanh Hoa", "Nam Dinh", "Thai Binh", "Bac Ninh", "Thai Nguyen", "Quang Nam", "Hue", "TP HCM", "Can Tho"};
-        const std::string listPTXT[] = {"Hoc ba", "Diem thi THPT", "Danh gia nang luc", "Tuyen thang"};
-        
-        const std::string listNganh[] = {"Cong nghe thong tin", "Khoa hoc may tinh", "He thong thong tin", "An toan thong tin", "Ky thuat may tinh", "Dien tu vien thong"};
-        const std::string listKhoa[] = {"Truong CNTT&TT", "Truong CNTT&TT", "Truong CNTT&TT", "Truong CNTT&TT", "Khoa Dien tu", "Khoa Vien thong"};
-        const std::string listStatus[] = {"Dang hoc", "Dang hoc", "Dang hoc", "Bao luu", "Canh cao"};
-        const std::string listAdvisor[] = {"Nguyen Van A", "Tran Thi B", "Le Van C", "Pham Minh D", "Hoang Duc E"};
+        // 1. Generate NganhHoc (NganhHoc.csv)
+        std::string nhFile = "NganhHoc.csv";
+        std::ofstream outNH(nhFile);
+        if (!outNH.is_open()) return false;
+        outNH << "MaNganh,TenNganh,HocPhiMotTin\n";
+        outNH << "IT1,Khoa hoc may tinh,400\n";
+        outNH << "IT2,Ky thuat may tinh,420\n";
+        outNH << "IT3,An toan thong tin,400\n";
+        outNH << "IT-E6,Cong nghe thong tin Chat luong cao,800\n";
+        outNH.close();
+        std::cout << "-> Da tao file: " << nhFile << std::endl;
 
-        const size_t sizeHo = sizeof(listHo) / sizeof(listHo[0]);
-        const size_t sizeDem = sizeof(listDem) / sizeof(listDem[0]);
-        const size_t sizeTen = sizeof(listTen) / sizeof(listTen[0]);
-        const size_t sizeLop = sizeof(listLop) / sizeof(listLop[0]);
-        const size_t sizeTinh = sizeof(listTinh) / sizeof(listTinh[0]);
-        const size_t sizePTXT = sizeof(listPTXT) / sizeof(listPTXT[0]);
-        const size_t sizeNganh = sizeof(listNganh) / sizeof(listNganh[0]);
-        const size_t sizeStatus = sizeof(listStatus) / sizeof(listStatus[0]);
-        const size_t sizeAdvisor = sizeof(listAdvisor) / sizeof(listAdvisor[0]);
+        // 2. Generate HocPhan (HocPhan.csv)
+        std::string hpFile = "HocPhan.csv";
+        std::ofstream outHP(hpFile);
+        if (!outHP.is_open()) return false;
+        outHP << "MaHP,TenHP,SoTinChi,SoTinChiHocPhi\n";
+        outHP << "MI1141,Dai so,3,3\n";
+        outHP << "MI1111,Giai tich 1,4,4\n";
+        outHP << "IT1110,Tin hoc dai cuong,4,4\n";
+        outHP << "LL1111,Triet hoc Mac-Lenin,3,3\n";
+        outHP.close();
+        std::cout << "-> Da tao file: " << hpFile << std::endl;
+
+        // 3. Generate SinhVien (DanhSachSinhVien.csv) - 17 fields
+        std::string svFile = "DanhSachSinhVien.csv";
+        std::ofstream outSV(svFile);
+        if (!outSV.is_open()) return false;
+        
+        outSV << "MSSV,HoTen,MaNganh,Lop,TruongKhoa,KhoaHoc,NamNhapHoc,NgaySinh,GioiTinh,NoiSinh,DanToc,SDT,EmailTruong,EmailCaNhan,TrangThaiHT,PhuongThucXT,QueQuan\n";
+        
+        const std::string listHo[] = {"Nguyen", "Tran", "Le", "Pham", "Hoang", "Phan", "Vu", "Dang", "Bui", "Do"};
+        const std::string listDem[] = {"Van", "Thi", "Quang", "Minh", "Quoc", "Anh", "Duc", "Ngoc"};
+        const std::string listTen[] = {"Anh", "Binh", "Cuong", "Dung", "Dong", "Giang", "Hai", "Hung", "Huy", "Khoa", "Linh", "Long", "Mai", "Trang"};
+        const std::string listTinh[] = {"Ha Noi", "Hai Phong", "Da Nang", "Quang Ninh", "Nghe An"};
+        const std::string listMaNganh[] = {"IT1", "IT2", "IT3", "IT-E6"};
 
         long long startingMSSV = 20250001;
-
         for (size_t i = 0; i < recordCount; ++i) {
-            std::string mssvStr = std::to_string(startingMSSV + i);
+            std::string mssv = std::to_string(startingMSSV + i);
+            std::string hoTen = listHo[std::rand() % 10] + " " + listDem[std::rand() % 8] + " " + listTen[std::rand() % 14];
+            std::string gioiTinh = (std::rand() % 2 == 0) ? "Nam" : "Nu";
+            std::string ngaySinh = "01/01/2005";
+            std::string queQuan = listTinh[std::rand() % 5];
+            std::string maNganh = listMaNganh[std::rand() % 4];
             
-            // Randomize name
-            std::string ho = listHo[std::rand() % sizeHo];
-            std::string dem = listDem[std::rand() % sizeDem];
-            std::string ten = listTen[std::rand() % sizeTen];
-            std::string fullName = ho + " " + dem + " " + ten;
+            outSV << mssv << "," << hoTen << "," << maNganh << ",IT-01,Truong CNTT&TT,K68,2023,"
+                  << ngaySinh << "," << gioiTinh << "," << queQuan << ",Kinh,0912345678,"
+                  << mssv << "@sis.hust.edu.vn," << mssv << "@gmail.com,Dang hoc,THPT," << queQuan << "\n";
+        }
+        outSV.close();
+        std::cout << "-> Da tao file: " << svFile << " (" << recordCount << " ban ghi)" << std::endl;
 
-            // Simple gender deduction based on middle name
-            std::string gender = (dem == "Thi") ? "Nu" : ((std::rand() % 2 == 0) ? "Nam" : "Nu");
-
-            std::string classCode = listLop[std::rand() % sizeLop];
+        // 4. Generate Diem
+        std::string diemFiles[] = {"Diem_DaiSo.csv", "Diem_GT1.csv", "Diem_TinHoc.csv", "Diem_Triet.csv"};
+        std::string maHPs[] = {"MI1141", "MI1111", "IT1110", "LL1111"};
+        
+        for (int i = 0; i < 4; ++i) {
+            std::ofstream outDiem(diemFiles[i]);
+            if (!outDiem.is_open()) continue;
+            outDiem << "MSSV,MaLop,MaHP,DiemQTr,DiemCK,DiemHP,DiemChu,Thang4\n";
             
-            // Randomize date of birth (simple generator between 2004 and 2007)
-            int day = 1 + (std::rand() % 28);
-            int month = 1 + (std::rand() % 12);
-            int year = 2004 + (std::rand() % 4);
-            std::string dob = (day < 10 ? "0" : "") + std::to_string(day) + "/" +
-                              (month < 10 ? "0" : "") + std::to_string(month) + "/" +
-                              std::to_string(year);
+            for (size_t j = 0; j < recordCount; ++j) {
+                if (std::rand() % 10 < 2) continue; // 20% dropped the class
 
-            std::string hometown = listTinh[std::rand() % sizeTinh];
-            std::string admMethod = listPTXT[std::rand() % sizePTXT];
-            double admScore = 20.0 + static_cast<double>(std::rand() % 100) / 10.0; // 20.0 to 30.0
+                std::string mssv = std::to_string(startingMSSV + j);
+                std::string maLop = "14320" + std::to_string(i);
+                float diemQTr = 4.0f + static_cast<float>(std::rand() % 61) / 10.0f; 
+                float diemCK = 4.0f + static_cast<float>(std::rand() % 61) / 10.0f;
+                float diemHP = (diemQTr * 0.3f) + (diemCK * 0.7f);
+                std::string diemChu = "C";
+                float thang4 = 2.0f;
 
-            std::string email = mssvStr + "@sis.hust.edu.vn";
-            std::string phone = "09" + std::to_string(10000000 + std::rand() % 90000000); // 09xxxxxxxx
-            std::string address = "So " + std::to_string(1 + std::rand() % 150) + " Pho Chua Boc - " + hometown;
+                if (diemHP >= 8.5) { diemChu = "A"; thang4 = 4.0f; }
+                else if (diemHP >= 8.0) { diemChu = "B+"; thang4 = 3.5f; }
+                else if (diemHP >= 7.0) { diemChu = "B"; thang4 = 3.0f; }
+                else if (diemHP >= 6.5) { diemChu = "C+"; thang4 = 2.5f; }
+                else if (diemHP >= 5.5) { diemChu = "C"; thang4 = 2.0f; }
+                else if (diemHP >= 5.0) { diemChu = "D+"; thang4 = 1.5f; }
+                else if (diemHP >= 4.0) { diemChu = "D"; thang4 = 1.0f; }
+                else { diemChu = "F"; thang4 = 0.0f; }
 
-            size_t majorIdx = std::rand() % sizeNganh;
-            std::string major = listNganh[majorIdx];
-            std::string department = listKhoa[majorIdx]; // Keep aligned with major
-            
-            std::string status = listStatus[std::rand() % sizeStatus];
-            int enrollYear = year + 18; // Entered university at 18
-            double gpa = 1.0 + static_cast<double>(std::rand() % 301) / 100.0; // 1.0 to 4.0
-            int credits = std::rand() % 151; // 0 to 150 credits
-            std::string advisor = listAdvisor[std::rand() % sizeAdvisor];
-
-            // Output CSV row
-            outFile << mssvStr << ","
-                    << fullName << ","
-                    << classCode << ","
-                    << dob << ","
-                    << hometown << ","
-                    << gender << ","
-                    << admMethod << ","
-                    << admScore << ","
-                    << email << ","
-                    << phone << ","
-                    << address << ","
-                    << major << ","
-                    << department << ","
-                    << status << ","
-                    << enrollYear << ","
-                    << gpa << ","
-                    << credits << ","
-                    << advisor << "\n";
+                outDiem << mssv << "," << maLop << "," << maHPs[i] << "," 
+                        << diemQTr << "," << diemCK << "," << diemHP << "," 
+                        << diemChu << "," << thang4 << "\n";
+            }
+            outDiem.close();
+            std::cout << "-> Da tao file diem: " << diemFiles[i] << std::endl;
         }
 
-        outFile.close();
         return true;
     }
 };

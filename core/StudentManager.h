@@ -3,155 +3,144 @@
 
 #include "../datastructures/LinkedList.h"
 #include "../datastructures/HashMap.h"
-#include "../models/Student.h"
+#include "../models/SinhVien.h"
+#include "../models/HocPhan.h"
+#include "../models/NganhHoc.h"
 #include <iostream>
+#include <iomanip>
 
 class StudentManager {
 private:
-    LinkedList<Student*> allClasses;   // Single source of truth: owns the Student* objects
-    HashMap studentsByMSSV;            // Index: quick lookups mapping MSSV to Student*
+    HashMap<std::string, SinhVien*> danhSachSinhVien; // Key: MSSV
+    HashMap<std::string, HocPhan*> danhSachHocPhan;   // Key: MaHP
+    HashMap<std::string, NganhHoc*> danhSachNganhHoc; // Key: MaNganh
 
 public:
     StudentManager() {}
-
-    const LinkedList<Student*>& getAllClasses() const {
-        return allClasses;
-    }
 
     ~StudentManager() {
         cleanUp();
     }
 
-    // Disable copy constructor and assignment
     StudentManager(const StudentManager&) = delete;
     StudentManager& operator=(const StudentManager&) = delete;
 
-    // Release all dynamically allocated Student objects
     void cleanUp() {
-        Node<Student*>* current = allClasses.getHead();
-        while (current != nullptr) {
-            delete current->data; // Delete the Student instance
-            current = current->next;
+        // Free SinhVien objects
+        LinkedList<SinhVien*>* svList = danhSachSinhVien.values();
+        if (svList) {
+            Node<SinhVien*>* current = svList->getHead();
+            while (current != nullptr) {
+                delete current->data; 
+                current = current->next;
+            }
+            delete svList;
         }
-        allClasses.clear();
-        studentsByMSSV.clear();
+        danhSachSinhVien.clear();
+
+        // Free HocPhan objects
+        LinkedList<HocPhan*>* hpList = danhSachHocPhan.values();
+        if (hpList) {
+            Node<HocPhan*>* current = hpList->getHead();
+            while (current != nullptr) {
+                delete current->data;
+                current = current->next;
+            }
+            delete hpList;
+        }
+        danhSachHocPhan.clear();
+
+        // Free NganhHoc objects
+        LinkedList<NganhHoc*>* nganhList = danhSachNganhHoc.values();
+        if (nganhList) {
+            Node<NganhHoc*>* current = nganhList->getHead();
+            while (current != nullptr) {
+                delete current->data;
+                current = current->next;
+            }
+            delete nganhList;
+        }
+        danhSachNganhHoc.clear();
     }
 
-    // Add student. Takes ownership of Student* pointer.
-    // Returns true if successfully added, false if MSSV is a duplicate.
-    bool addStudent(Student* s) {
-        if (s == nullptr) return false;
-
-        // Ensure MSSV is unique
-        if (studentsByMSSV.get(s->getMSSV()) != nullptr) {
-            return false;
-        }
-
-        // Add to HashMap
-        studentsByMSSV.put(s->getMSSV(), s);
-
-        // Add to overall LinkedList
-        allClasses.insertAtTail(s);
+    // Nganh Hoc Management
+    bool addNganhHoc(NganhHoc* nh) {
+        if (nh == nullptr) return false;
+        if (danhSachNganhHoc.get(nh->getMaNganh()) != nullptr) return false;
+        danhSachNganhHoc.put(nh->getMaNganh(), nh);
         return true;
     }
 
-    // Find student by MSSV (O(1) expected via HashMap)
-    Student* findStudentByMSSV(const std::string& mssv) const {
-        return studentsByMSSV.get(mssv);
+    NganhHoc* findNganhHocByMa(const std::string& maNganh) const {
+        return danhSachNganhHoc.get(maNganh);
     }
 
-    // Find students by Class (O(N) sequential search)
-    // Note: Returns a newly constructed LinkedList of Student* pointers.
-    // The caller is responsible for letting this returned LinkedList fall out of scope
-    // (which cleans up its nodes but does not delete the Student instances).
-    LinkedList<Student*>* findStudentsByClass(const std::string& classCode) const {
-        LinkedList<Student*>* results = new LinkedList<Student*>();
-        Node<Student*>* current = allClasses.getHead();
-        
-        while (current != nullptr) {
-            if (current->data->getClassCode() == classCode) {
-                results->insertAtTail(current->data);
-            }
-            current = current->next;
-        }
-        return results;
-    }
-
-    // Find students by Hometown (O(N) sequential search)
-    LinkedList<Student*>* findStudentsByHometown(const std::string& hometown) const {
-        LinkedList<Student*>* results = new LinkedList<Student*>();
-        Node<Student*>* current = allClasses.getHead();
-        
-        while (current != nullptr) {
-            // Case-insensitive or substring matches can be added, but exact match is standard.
-            if (current->data->getHometown() == hometown) {
-                results->insertAtTail(current->data);
-            }
-            current = current->next;
-        }
-        return results;
-    }
-
-    // Delete student by MSSV. Releases the student's dynamic memory.
-    // Returns true if successfully deleted, false if student not found.
-    bool deleteStudent(const std::string& mssv) {
-        Student* s = studentsByMSSV.get(mssv);
-        if (s == nullptr) return false;
-
-        // Remove from HashMap
-        studentsByMSSV.remove(mssv);
-
-        // Remove from LinkedList
-        allClasses.remove(s);
-
-        // Deallocate student record
-        delete s;
+    // Học Phần Management
+    bool addHocPhan(HocPhan* hp) {
+        if (hp == nullptr) return false;
+        if (danhSachHocPhan.get(hp->getMaHP()) != nullptr) return false;
+        danhSachHocPhan.put(hp->getMaHP(), hp);
         return true;
+    }
+
+    HocPhan* findHocPhanByMa(const std::string& maHP) const {
+        return danhSachHocPhan.get(maHP);
+    }
+    
+    // Sinh Viên Management
+    bool addSinhVien(SinhVien* sv) {
+        if (sv == nullptr) return false;
+        if (danhSachSinhVien.get(sv->getMSSV()) != nullptr) return false;
+        danhSachSinhVien.put(sv->getMSSV(), sv);
+        return true;
+    }
+
+    SinhVien* findSinhVienByMSSV(const std::string& mssv) const {
+        return danhSachSinhVien.get(mssv);
     }
 
     size_t getStudentCount() const {
-        return allClasses.getSize();
+        return danhSachSinhVien.getSize();
     }
 
-    // Prints a formatted table of all students
+    // Helpers for printing
     void printAll() const {
-        if (allClasses.isEmpty()) {
-            std::cout << "Danh sach sinh vien trong." << std::endl;
+        LinkedList<SinhVien*>* list = danhSachSinhVien.values();
+        if (list == nullptr || list->isEmpty()) {
+            std::cout << "He thong chua co sinh vien nao!" << std::endl;
+            if (list) delete list;
             return;
         }
-
+        
         printTableHeader();
-        Node<Student*>* current = allClasses.getHead();
+        Node<SinhVien*>* current = list->getHead();
         while (current != nullptr) {
-            current->data->printRow();
+            SinhVien* sv = current->data;
+            std::cout << "| " << std::left << std::setw(10) << sv->getMSSV()
+                      << " | " << std::setw(20) << sv->getHoTen().substr(0, 20)
+                      << " | " << std::setw(10) << sv->getLop()
+                      << " | " << std::setw(10) << sv->getNgaySinh()
+                      << " | " << std::setw(12) << sv->getQueQuan().substr(0, 12)
+                      << " |" << std::endl;
             current = current->next;
         }
         printTableFooter();
+        delete list;
     }
 
-    // Static helper to print headers
     static void printTableHeader() {
-        std::cout << "+" << std::string(86, '-') << "+" << std::endl;
+        std::cout << "+" << std::string(73, '-') << "+" << std::endl;
         std::cout << "| " << std::left << std::setw(10) << "MSSV"
                   << " | " << std::setw(20) << "Ho va ten"
                   << " | " << std::setw(10) << "Lop"
                   << " | " << std::setw(10) << "Ngay sinh"
                   << " | " << std::setw(12) << "Que quan"
-                  << " | " << std::setw(6) << "G.Tinh"
-                  << " | " << std::setw(6) << "GPA"
-                  << " | " << std::setw(5) << "T.Chi" << " |" << std::endl;
-        std::cout << "+" << std::string(86, '-') << "+" << std::endl;
+                  << " |" << std::endl;
+        std::cout << "+" << std::string(73, '-') << "+" << std::endl;
     }
 
     static void printTableFooter() {
-        std::cout << "+" << std::string(86, '-') << "+" << std::endl;
-    }
-
-    // Returns collision rate of the HashMap (for quality report in Phase 6)
-    double getCollisionRate() const {
-        if (getStudentCount() == 0) return 0.0;
-        size_t collisions = studentsByMSSV.getCollisionCount();
-        return (double)collisions / studentsByMSSV.getSize() * 100.0;
+        std::cout << "+" << std::string(73, '-') << "+" << std::endl;
     }
 };
 

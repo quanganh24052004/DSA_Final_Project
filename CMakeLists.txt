@@ -11,7 +11,10 @@ set(SOURCE_FILES
     datastructures/Node.h
     datastructures/LinkedList.h
     datastructures/HashMap.h
-    models/Student.h
+    models/SinhVien.h
+    models/HocPhan.h
+    models/KetQuaHocTap.h
+    models/NganhHoc.h
     core/StudentManager.h
     utils/FileHandler.h
     utils/DataGenerator.h
@@ -24,7 +27,10 @@ source_group("datastructures" FILES
     datastructures/HashMap.h
 )
 source_group("models" FILES
-    models/Student.h
+    models/SinhVien.h
+    models/HocPhan.h
+    models/KetQuaHocTap.h
+    models/NganhHoc.h
 )
 source_group("core" FILES
     core/StudentManager.h

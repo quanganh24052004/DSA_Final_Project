@@ -74,4 +74,4 @@ DerivedData/
 *.xcuserstate
 
 # Project specific data files (Optional, if you don't want to push the huge csv)
-# students.csv
+*.csv
