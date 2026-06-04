@@ -1,8 +1,41 @@
-# Hướng dẫn Cài đặt và Chạy Dự án Final_Project_DSA
+# Hệ thống Quản lý Đào tạo Tín chỉ (C++ CLI Application)
 
-Dự án này là một ứng dụng quản lý sinh viên chạy trên giao diện dòng lệnh (CLI), được viết bằng **C++** và sử dụng **CMake** để quản lý biên dịch.
+Dự án này là một ứng dụng quản lý sinh viên chạy trên giao diện dòng lệnh (CLI), được viết bằng **C++** và sử dụng **CMake** để quản lý biên dịch. Dự án áp dụng kiến trúc 3 lớp (3-Layer Architecture) và triển khai thủ công các cấu trúc dữ liệu nền tảng như **Bảng băm (Hash Map)** và **Danh sách liên kết (Linked List)** nhằm đạt hiệu suất O(1) trong quản lý dữ liệu lớn.
 
-## Yêu cầu Hệ thống (Prerequisites)
+## 🚀 Các chức năng nổi bật (Modules)
+
+Toàn bộ hệ thống được chia thành 4 module nghiệp vụ chính:
+
+### Module 1: Quản Lý Danh Mục & Cấu Trúc Dữ Liệu Lõi
+- **Cấu trúc dữ liệu tự xây dựng:**
+  - `HashMap<K, V>`: Sử dụng phương pháp Separate Chaining (mảng các Linked List) để xử lý đụng độ. Tích hợp thuật toán tự động cấp phát lại (Rehashing) khi tải trọng Load Factor >= 0.75, đảm bảo thời gian tra cứu luôn xấp xỉ O(1).
+  - `LinkedList<T>`: Danh sách liên kết đơn cấp phát động.
+- **Tính năng:**
+  - Thêm, sửa, xóa, tìm kiếm các thực thể cốt lõi: Sinh viên, Học phần, Lớp học phần, Ngành học.
+  - Mỗi thực thể đều được lưu trữ trực tiếp trên RAM thông qua các Hash Map độc lập, được quản lý tập trung tại `StudentManager`.
+
+### Module 2: Báo Cáo & Hiển Thị Thông Tin
+- **Tra cứu Bảng điểm cá nhân:** Cho phép nhập MSSV để truy xuất ngay lập tức (O(1)) toàn bộ quá trình học tập của sinh viên. Trích xuất tên môn học, số tín chỉ, điểm thành phần và điểm tổng kết dưới định dạng bảng đẹp mắt.
+- **Bảng điểm Lớp học phần:** Cho phép nhập Mã Lớp và in ra danh sách điểm của toàn bộ sinh viên trong lớp đó (O(K * M)) mà không làm rò rỉ bộ nhớ.
+
+### Module 3: Thống Kê & Đánh Giá Học Lực
+- **Tính toán GPA & CPA (Thang điểm 4):**
+  - Tự động đối chiếu điểm số của sinh viên với số tín chỉ môn học để tính trung bình cộng có trọng số.
+  - Phân loại rõ ràng giữa GPA (Điểm của 1 học kỳ cụ thể) và CPA (Điểm tích lũy toàn khoá).
+- **Xếp loại học lực:** Ánh xạ CPA ra các mức độ (Xuất sắc, Giỏi, Khá, Trung bình, Yếu) theo quy chế đào tạo tín chỉ tiêu chuẩn.
+
+### Module 4: Chức Năng Nền Hệ Thống (File I/O & Đánh giá thuật toán)
+- **Quản lý dữ liệu file (Load/Save CSV):**
+  - Hệ thống tự động phân tách chuỗi (parse) và nạp hàng vạn bản ghi từ file `.csv` vào RAM.
+  - Khả năng **Lưu dữ liệu**: Trích xuất tất cả thông tin hiện có ra các file `_Export.csv` để bảo lưu trạng thái hệ thống.
+- **Sinh dữ liệu mẫu (Mock Data):** Khởi tạo hơn 10.000 bản ghi sinh viên giả lập, tự động phân bổ điểm số ngẫu nhiên.
+- **Bài test Hiệu năng Tìm kiếm:** 
+  - So sánh trực tiếp tốc độ tìm kiếm 1.000 sinh viên bằng **Vòng lặp tuyến tính (O(N))** so với **Tra cứu Hash Map (O(1))**.
+  - Tính toán thời gian thực bằng `<chrono>` (tính bằng milliseconds) nhằm minh chứng cho tính ưu việt của Bảng băm.
+
+---
+
+## 💻 Yêu cầu Hệ thống (Prerequisites)
 
 - Trình biên dịch C++ hỗ trợ chuẩn **C++11** trở lên.
 - **CMake** (phiên bản 3.10 trở lên).
@@ -14,127 +47,66 @@ Dự án này là một ứng dụng quản lý sinh viên chạy trên giao di�
 ### Cách 1: Sử dụng Terminal (Khuyên dùng)
 
 1. **Mở Terminal** và di chuyển vào thư mục gốc của dự án:
-
    ```bash
    cd /đường/dẫn/đến/thư/mục/Final_Project_DSA
    ```
 
-2. **Xóa bộ nhớ đệm CMake cũ (nếu có**)Nếu bạn gặp lỗi `CMakeCache.txt is different than the directory...` khi di chuyển hoặc đổi tên thư mục dự án, hãy xóa các file sinh ra trước đó:
-
+2. **Xóa bộ nhớ đệm CMake cũ (nếu có)** Nếu bạn gặp lỗi `CMakeCache.txt is different than the directory...`, hãy xóa các file sinh ra trước đó:
    ```bash
    rm -rf build CMakeCache.txt CMakeFiles
    ```
 
 3. **Tạo thư mục build và di chuyển vào đó**:
-
    ```bash
-   mkdir -p build
-   cd build
+   mkdir -p build && cd build
    ```
 
-4. **Sinh cấu hình build bằng CMake**:
-
+4. **Biên dịch dự án**:
    ```bash
    cmake ..
-   ```
-
-5. **Biên dịch dự án**:
-
-   ```bash
    make
    ```
 
-6. **Chạy chương trình**: Sau khi biên dịch thành công, chạy file thực thi:
-
+5. **Chạy chương trình**:
    ```bash
    ./Final_Project_DSA
    ```
-
-### Cách 2: Sử dụng Xcode
-
-Nếu bạn đã cài đặt Xcode, bạn có thể nhấp đúp vào tệp `Final_Project_DSA.xcodeproj` để mở dự án bằng Xcode, sau đó nhấn biểu tượng **Run (▶)** (hoặc tổ hợp phím `Cmd + R`) để chạy.
 
 ---
 
 ## 🪟 Hướng dẫn chạy trên Windows
 
-Trên Windows, bạn có hai cách phổ biến để biên dịch dự án CMake: sử dụng **Visual Studio** hoặc sử dụng **MinGW (GCC)**.
-
 ### Cách 1: Sử dụng Visual Studio (Khuyên dùng nếu đã cài đặt)
 
-*Yêu cầu: Đã cài đặt Visual Studio với tính năng "Desktop development with C++".*
+1. Mở Visual Studio.
+2. Chọn **"Open a local folder"** và chọn thư mục gốc của dự án `Final_Project_DSA`.
+3. Visual Studio sẽ tự động nhận diện file `CMakeLists.txt` và cấu hình dự án. Chọn mục tiêu (target) là `Final_Project_DSA` trên thanh công cụ và nhấn nút **Run (▶)**.
 
-1. **Sử dụng Visual Studio IDE**:
+### Cách 2: Sử dụng Developer Command Prompt cho VS
 
-   - Mở Visual Studio.
-   - Chọn **"Open a local folder"** và chọn thư mục gốc của dự án `Final_Project_DSA`.
-   - Visual Studio sẽ tự động nhận diện file `CMakeLists.txt` và cấu hình dự án.
-   - Sau khi cấu hình xong, bạn chọn mục tiêu (target) là `Final_Project_DSA` trên thanh công cụ và nhấn nút **Run (▶)** có biểu tượng nút Play màu xanh lá cây.
+Mở **x64 Native Tools Command Prompt for VS** và chạy:
+```cmd
+cd đường\dẫn\đến\Final_Project_DSA
+mkdir build && cd build
+cmake ..
+cmake --build . --config Release
+Release\Final_Project_DSA.exe
+```
 
-2. **Sử dụng Developer Command Prompt**:
+### Cách 3: Sử dụng MinGW (GCC) & CMake trên Command Prompt/PowerShell
 
-   - Mở **x64 Native Tools Command Prompt for VS**.
-   - Di chuyển đến thư mục dự án:
-
-     ```cmd
-     cd đường\dẫn\đến\Final_Project_DSA
-     ```
-   - Tạo thư mục build và cấu hình:
-
-     ```cmd
-     mkdir build
-     cd build
-     cmake ..
-     ```
-   - Biên dịch dự án:
-
-     ```cmd
-     cmake --build . --config Release
-     ```
-   - Chạy chương trình:
-
-     ```cmd
-     Release\Final_Project_DSA.exe
-     ```
-
-### Cách 2: Sử dụng MinGW (GCC) & CMake trên Command Prompt/PowerShell
-
-*Yêu cầu: Đã cài đặt MinGW-w64 (có* `g++` *và* `mingw32-make`*) và CMake, đồng thời đã thêm chúng vào biến môi trường PATH.*
-
-1. Mở **Command Prompt** hoặc **PowerShell** và di chuyển vào thư mục dự án:
-
-   ```cmd
-   cd đường\dẫn\đến\Final_Project_DSA
-   ```
-
-2. Tạo thư mục build:
-
-   ```cmd
-   mkdir build
-   cd build
-   ```
-
-3. Cấu hình CMake để sử dụng MinGW Makefiles:
-
-   ```cmd
-   cmake -G "MinGW Makefiles" ..
-   ```
-
-4. Biên dịch dự án:
-
-   ```cmd
-   mingw32-make
-   ```
-
-5. Chạy chương trình:
-
-   ```cmd
-   Final_Project_DSA.exe
-   ```
+```cmd
+cd đường\dẫn\đến\Final_Project_DSA
+mkdir build && cd build
+cmake -G "MinGW Makefiles" ..
+mingw32-make
+Final_Project_DSA.exe
+```
 
 ---
 
-## 💡 Lưu ý chung
-
-- **Lỗi Cache**: Nếu bạn copy thư mục dự án từ máy tính này sang máy tính khác hoặc đổi tên thư mục, CMake sẽ báo lỗi về Cache. Cách khắc phục là xóa thư mục `build` (và file `CMakeCache.txt` ngoài thư mục gốc nếu có) rồi chạy lại lệnh `cmake ..` hoặc cấu hình lại từ đầu.
-- **Dữ liệu mẫu**: Chương trình sẽ tự động copy file `students.csv` vào thư mục build để bạn có thể tải dữ liệu một cách dễ dàng khi chạy chương trình (Bấm phím `1` -&gt; Enter).
+## 💡 Hướng dẫn sử dụng Cơ bản
+Khi chạy thành công chương trình, vui lòng thao tác theo các bước sau để có trải nghiệm tốt nhất:
+1. Nhấn phím `5` để vào Menu hệ thống.
+2. Tại đây, chọn `1` -> Chọn tiếp `1` để hệ thống tự động đọc bộ dữ liệu mặc định vào RAM. Hoặc chọn `2` để Sinh 10.000 dữ liệu mẫu cực kỳ trực quan.
+3. Thoát ra màn hình chính (bấm `0`) và thoả sức khám phá chức năng Tra cứu Điểm, Thống kê GPA ở các mục `3` và `4`.
