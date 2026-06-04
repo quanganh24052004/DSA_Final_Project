@@ -13,6 +13,9 @@
 #include <chrono>
 #include <iomanip>
 #include <limits>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
 
 void clearInputBuffer() {
     std::cin.clear();
@@ -256,19 +259,20 @@ int main(int argc, const char * argv[]) {
                     if (subChoice == 0) break;
 
                     if (subChoice == 1) {
-                        int loadChoice = -1;
-                        std::cout << "\n--- CHON CHE DO TAI DU LIEU ---" << std::endl;
+                        int loadSaveChoice = -1;
+                        std::cout << "\n--- CHON CHE DO TAI/LUU DU LIEU ---" << std::endl;
                         std::cout << "1. Tai toan bo du lieu mac dinh (Xoa du lieu cu)" << std::endl;
                         std::cout << "2. Tai them tu file cu the (Giu nguyen du lieu hien tai)" << std::endl;
+                        std::cout << "3. Luu toan bo du lieu hien tai ra file CSV" << std::endl;
                         std::cout << "Nhap lua chon: ";
-                        if (!(std::cin >> loadChoice)) {
+                        if (!(std::cin >> loadSaveChoice)) {
                             std::cout << "Loi: Vui long nhap so nguyen hop le!" << std::endl;
                             clearInputBuffer();
                             continue;
                         }
                         clearInputBuffer();
 
-                        if (loadChoice == 1) {
+                        if (loadSaveChoice == 1) {
                             std::cout << "Dang tai du lieu mac dinh..." << std::endl;
                             manager.cleanUp(); // Reset truoc khi tai
                             FileHandler::loadNganhHoc("../NganhHoc.csv", manager);
@@ -278,7 +282,7 @@ int main(int argc, const char * argv[]) {
                             FileHandler::loadDiem("../Diem_GT1.csv", manager, "MI1111");
                             FileHandler::loadDiem("../Diem_TinHoc.csv", manager, "IT1110");
                             FileHandler::loadDiem("../Diem_Triet.csv", manager, "LL1111");
-                        } else if (loadChoice == 2) {
+                        } else if (loadSaveChoice == 2) {
                             int fileType = -1;
                             std::cout << "\n--- CHON LOAI DU LIEU MUON TAI ---" << std::endl;
                             std::cout << "1. Nganh hoc" << std::endl;
@@ -320,6 +324,12 @@ int main(int argc, const char * argv[]) {
                                     std::cout << "Loi: Lua chon loai du lieu khong hop le!" << std::endl;
                                     break;
                             }
+                        } else if (loadSaveChoice == 3) {
+                            std::cout << "Dang luu toan bo du lieu ra file..." << std::endl;
+                            FileHandler::saveNganhHoc("../NganhHoc_Export.csv", manager);
+                            FileHandler::saveHocPhan("../HocPhan_Export.csv", manager);
+                            FileHandler::saveSinhVien("../DanhSachSinhVien_Export.csv", manager);
+                            FileHandler::saveDiem("../Diem_Export.csv", manager);
                         } else {
                             std::cout << "Loi: Lua chon khong hop le!" << std::endl;
                         }
@@ -328,7 +338,71 @@ int main(int argc, const char * argv[]) {
                         // Thay đổi số lượng từ 1000 lên 10000 để phù hợp với menu mới
                         DataGenerator::generateMockData(10000); 
                     } else if (subChoice == 3) {
-                        std::cout << "Chuc nang Danh gia hieu nang tim kiem dang duoc cap nhat..." << std::endl;
+                        LinkedList<SinhVien*>* listSV = manager.getAllSinhVien();
+                        if (!listSV || listSV->isEmpty()) {
+                            std::cout << "Loi: Chua co du lieu Sinh Vien de danh gia hieu nang!" << std::endl;
+                            if (listSV) delete listSV;
+                            continue;
+                        }
+                        
+                        std::vector<std::string> randomMSSVs;
+                        std::vector<SinhVien*> svArray;
+                        Node<SinhVien*>* current = listSV->getHead();
+                        while (current != nullptr) {
+                            svArray.push_back(current->data);
+                            current = current->next;
+                        }
+                        
+                        std::srand(static_cast<unsigned int>(std::time(nullptr)));
+                        int testCount = 1000;
+                        if (svArray.size() < 1000) testCount = svArray.size();
+                        
+                        for (int i = 0; i < testCount; ++i) {
+                            randomMSSVs.push_back(svArray[std::rand() % svArray.size()]->getMSSV());
+                        }
+                        
+                        std::cout << "\n=== DANH GIA HIEU NANG TIM KIEM (" << testCount << " Sinh vien) ===" << std::endl;
+                        
+                        // 1. O(N) LinkedList Search
+                        auto startLinear = std::chrono::high_resolution_clock::now();
+                        int foundLinear = 0;
+                        for (const std::string& target : randomMSSVs) {
+                            Node<SinhVien*>* curr = listSV->getHead();
+                            while (curr != nullptr) {
+                                if (curr->data->getMSSV() == target) {
+                                    foundLinear++;
+                                    break;
+                                }
+                                curr = curr->next;
+                            }
+                        }
+                        auto endLinear = std::chrono::high_resolution_clock::now();
+                        std::chrono::duration<double, std::milli> durationLinear = endLinear - startLinear;
+                        
+                        // 2. O(1) HashMap Search
+                        auto startHash = std::chrono::high_resolution_clock::now();
+                        int foundHash = 0;
+                        for (const std::string& target : randomMSSVs) {
+                            if (manager.findSinhVienByMSSV(target) != nullptr) {
+                                foundHash++;
+                            }
+                        }
+                        auto endHash = std::chrono::high_resolution_clock::now();
+                        std::chrono::duration<double, std::milli> durationHash = endHash - startHash;
+                        
+                        std::cout << "1. Tim kiem tuyen tinh tren Linked List O(N):" << std::endl;
+                        std::cout << "   - Thoi gian chay: " << std::fixed << std::setprecision(3) << durationLinear.count() << " ms" << std::endl;
+                        
+                        std::cout << "2. Tim kiem tren Hash Map O(1):" << std::endl;
+                        std::cout << "   - Thoi gian chay: " << std::fixed << std::setprecision(3) << durationHash.count() << " ms" << std::endl;
+                        
+                        if (durationHash.count() > 0) {
+                            std::cout << "=> Hieu suat: Hash Map nhanh hon khoang " 
+                                      << std::fixed << std::setprecision(1) << (durationLinear.count() / durationHash.count()) 
+                                      << " lan." << std::endl;
+                        }
+                        
+                        delete listSV;
                     } else {
                         std::cout << "Loi: Lua chon khong hop le!" << std::endl;
                     }

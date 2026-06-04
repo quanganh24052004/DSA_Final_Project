@@ -221,6 +221,95 @@ public:
         std::cout << "-> Da tai " << loadedCount << " ban ghi Diem tu " << filePath << std::endl;
         return true;
     }
+    // ==========================================
+    // SAVE FUNCTIONS
+    // ==========================================
+    static bool saveNganhHoc(const std::string& filePath, const StudentManager& manager) {
+        std::ofstream file(filePath);
+        if (!file.is_open()) return false;
+        file << "MaNganh,TenNganh,HocPhiMotTin\n";
+        LinkedList<NganhHoc*>* list = manager.getAllNganhHoc();
+        if (list) {
+            Node<NganhHoc*>* current = list->getHead();
+            while (current != nullptr) {
+                NganhHoc* nh = current->data;
+                file << nh->getMaNganh() << "," << nh->getTenNganh() << "," << nh->getHocPhiMotTin() << "\n";
+                current = current->next;
+            }
+            delete list;
+        }
+        file.close();
+        std::cout << "-> Da luu danh sach Nganh Hoc vao " << filePath << std::endl;
+        return true;
+    }
+
+    static bool saveHocPhan(const std::string& filePath, const StudentManager& manager) {
+        std::ofstream file(filePath);
+        if (!file.is_open()) return false;
+        file << "MaHP,TenHP,SoTinChi,SoTinChiHocPhi\n";
+        LinkedList<HocPhan*>* list = manager.getAllHocPhan();
+        if (list) {
+            Node<HocPhan*>* current = list->getHead();
+            while (current != nullptr) {
+                HocPhan* hp = current->data;
+                file << hp->getMaHP() << "," << hp->getTenHP() << "," << hp->getSoTinChi() << "," << hp->getSoTinChiHocPhi() << "\n";
+                current = current->next;
+            }
+            delete list;
+        }
+        file.close();
+        std::cout << "-> Da luu danh sach Hoc Phan vao " << filePath << std::endl;
+        return true;
+    }
+
+    static bool saveSinhVien(const std::string& filePath, const StudentManager& manager) {
+        std::ofstream file(filePath);
+        if (!file.is_open()) return false;
+        file << "MSSV,HoTen,MaNganh,Lop,TruongKhoa,KhoaHoc,NamNhapHoc,NgaySinh,GioiTinh,NoiSinh,DanToc,SDT,EmailTruong,EmailCaNhan,TrangThaiHT,PhuongThucXT,QueQuan\n";
+        LinkedList<SinhVien*>* list = manager.getAllSinhVien();
+        if (list) {
+            Node<SinhVien*>* current = list->getHead();
+            while (current != nullptr) {
+                SinhVien* sv = current->data;
+                file << sv->getMSSV() << "," << sv->getHoTen() << "," << sv->getMaNganh() << "," << sv->getLop() << ","
+                     << sv->getTruongKhoa() << "," << sv->getKhoaHoc() << "," << sv->getNamNhapHoc() << "," << sv->getNgaySinh() << ","
+                     << sv->getGioiTinh() << "," << sv->getNoiSinh() << "," << sv->getDanToc() << "," << sv->getSdt() << ","
+                     << sv->getEmailTruong() << "," << sv->getEmailCaNhan() << "," << sv->getTrangThaiHT() << ","
+                     << sv->getPhuongThucXT() << "," << sv->getQueQuan() << "\n";
+                current = current->next;
+            }
+            delete list;
+        }
+        file.close();
+        std::cout << "-> Da luu danh sach Sinh Vien vao " << filePath << std::endl;
+        return true;
+    }
+
+    static bool saveDiem(const std::string& filePath, const StudentManager& manager) {
+        std::ofstream file(filePath);
+        if (!file.is_open()) return false;
+        file << "MSSV,MaLop,MaHP,DiemQTr,DiemCK,DiemHP,DiemChu,Thang4\n";
+        LinkedList<SinhVien*>* list = manager.getAllSinhVien();
+        if (list) {
+            Node<SinhVien*>* current = list->getHead();
+            while (current != nullptr) {
+                SinhVien* sv = current->data;
+                Node<KetQuaHocTap*>* kqNode = sv->getDanhSachDiem().getHead();
+                while (kqNode != nullptr) {
+                    KetQuaHocTap* kq = kqNode->data;
+                    file << sv->getMSSV() << "," << kq->getMaLop() << "," << kq->getMaHP() << ","
+                         << kq->getDiemQTr() << "," << kq->getDiemCK() << "," << kq->getDiemHP() << ","
+                         << kq->getDiemChu() << "," << kq->getThang4() << "\n";
+                    kqNode = kqNode->next;
+                }
+                current = current->next;
+            }
+            delete list;
+        }
+        file.close();
+        std::cout << "-> Da luu toan bo Diem vao " << filePath << std::endl;
+        return true;
+    }
 };
 
 #endif // FILEHANDLER_H

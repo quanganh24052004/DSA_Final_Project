@@ -21,6 +21,11 @@ private:
 public:
     StudentManager() {}
 
+    LinkedList<SinhVien*>* getAllSinhVien() const { return danhSachSinhVien.values(); }
+    LinkedList<HocPhan*>* getAllHocPhan() const { return danhSachHocPhan.values(); }
+    LinkedList<NganhHoc*>* getAllNganhHoc() const { return danhSachNganhHoc.values(); }
+    LinkedList<LopHocPhan*>* getAllLopHocPhan() const { return danhSachLopHocPhan.values(); }
+
     ~StudentManager() {
         cleanUp();
     }
