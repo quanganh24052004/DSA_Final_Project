@@ -9,6 +9,7 @@
 #include "../models/LopHocPhan.h"
 #include <iostream>
 #include <iomanip>
+#include <utility>
 
 class StudentManager {
 private:
@@ -403,6 +404,71 @@ public:
             currentSV = currentSV->next;
         }
         std::cout << "+" << std::string(88, '-') << "+" << std::endl;
+    }
+
+    // === MODULE 3: THONG KE VA DANH GIA HOC LUC ===
+    std::pair<float, float> calculateGPAAndCPA(const std::string& mssv, const std::string& hocKy) const {
+        SinhVien* sv = findSinhVienByMSSV(mssv);
+        if (!sv) return {0.0f, 0.0f};
+
+        float sumGPA = 0.0f, sumCPA = 0.0f;
+        int creditsGPA = 0, creditsCPA = 0;
+
+        Node<KetQuaHocTap*>* current = sv->getDanhSachDiem().getHead();
+        while (current != nullptr) {
+            KetQuaHocTap* kq = current->data;
+            HocPhan* hp = findHocPhanByMa(kq->getMaHP());
+            LopHocPhan* lhp = findLopHocPhanByMa(kq->getMaLop());
+
+            if (hp != nullptr) {
+                int stc = hp->getSoTinChi();
+                float diem4 = kq->getThang4();
+
+                sumCPA += diem4 * stc;
+                creditsCPA += stc;
+
+                if (lhp != nullptr && lhp->getHocKy() == hocKy) {
+                    sumGPA += diem4 * stc;
+                    creditsGPA += stc;
+                }
+            }
+            current = current->next;
+        }
+
+        float gpa = (creditsGPA > 0) ? (sumGPA / creditsGPA) : 0.0f;
+        float cpa = (creditsCPA > 0) ? (sumCPA / creditsCPA) : 0.0f;
+
+        return {gpa, cpa};
+    }
+
+    std::string evaluateHocLuc(float cpa) const {
+        if (cpa >= 3.6f) return "Xuat sac";
+        if (cpa >= 3.2f) return "Gioi";
+        if (cpa >= 2.5f) return "Kha";
+        if (cpa >= 2.0f) return "Trung binh";
+        return "Yeu";
+    }
+
+    void displayThongKeHocLuc(const std::string& mssv, const std::string& hocKy) const {
+        SinhVien* sv = findSinhVienByMSSV(mssv);
+        if (!sv) {
+            std::cout << "Khong tim thay sinh vien co MSSV: " << mssv << std::endl;
+            return;
+        }
+
+        std::pair<float, float> result = calculateGPAAndCPA(mssv, hocKy);
+        float gpa = result.first;
+        float cpa = result.second;
+        std::string hocLuc = evaluateHocLuc(cpa);
+
+        std::cout << "\n=== THONG KE HOC LUC ===" << std::endl;
+        std::cout << "MSSV: " << sv->getMSSV() << " | Ho ten: " << sv->getHoTen() << std::endl;
+        std::cout << "Lop: " << sv->getLop() << " | Hoc ky tra cuu: " << hocKy << std::endl;
+        std::cout << std::string(45, '-') << std::endl;
+        std::cout << "Diem trung binh hoc ky (GPA): " << std::fixed << std::setprecision(2) << gpa << std::endl;
+        std::cout << "Diem trung binh tich luy (CPA): " << std::fixed << std::setprecision(2) << cpa << std::endl;
+        std::cout << "Xep loai hoc luc (theo CPA): " << hocLuc << std::endl;
+        std::cout << std::string(45, '-') << std::endl;
     }
 
     // Helpers for printing

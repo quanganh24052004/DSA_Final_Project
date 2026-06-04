@@ -157,9 +157,38 @@ int main(int argc, const char * argv[]) {
                     if (subChoice == 0) break;
 
                     if (subChoice == 1) {
-                        std::cout << "Chuc nang Tinh DTB hoc ky & Tich luy dang duoc cap nhat..." << std::endl;
+                        std::string mssv, hocKy;
+                        std::cout << "Nhap MSSV can thong ke: ";
+                        std::getline(std::cin, mssv);
+                        std::cout << "Nhap Hoc Ky (vd: 2023.1): ";
+                        std::getline(std::cin, hocKy);
+                        
+                        auto start = std::chrono::high_resolution_clock::now();
+                        manager.displayThongKeHocLuc(mssv, hocKy);
+                        auto end = std::chrono::high_resolution_clock::now();
+                        std::chrono::duration<double, std::milli> duration = end - start;
+                        
+                        std::cout << "\n[Thong ke] Thoi gian tinh toan GPA/CPA: " 
+                                  << std::fixed << std::setprecision(3) << duration.count() 
+                                  << " ms" << std::endl;
                     } else if (subChoice == 2) {
-                        std::cout << "Chuc nang Xep loai hoc luc dang duoc cap nhat..." << std::endl;
+                        std::string mssv;
+                        std::cout << "Nhap MSSV can xep loai: ";
+                        std::getline(std::cin, mssv);
+                        
+                        auto start = std::chrono::high_resolution_clock::now();
+                        std::pair<float, float> result = manager.calculateGPAAndCPA(mssv, "");
+                        float cpa = result.second;
+                        std::string hocLuc = manager.evaluateHocLuc(cpa);
+                        auto end = std::chrono::high_resolution_clock::now();
+                        std::chrono::duration<double, std::milli> duration = end - start;
+
+                        std::cout << "\nSinh vien " << mssv << " co CPA = " << std::fixed << std::setprecision(2) << cpa 
+                                  << " -> Xep loai: " << hocLuc << std::endl;
+                                  
+                        std::cout << "[Thong ke] Thoi gian tinh toan: " 
+                                  << std::fixed << std::setprecision(3) << duration.count() 
+                                  << " ms" << std::endl;
                     } else {
                         std::cout << "Loi: Lua chon khong hop le!" << std::endl;
                     }
