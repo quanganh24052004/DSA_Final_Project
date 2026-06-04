@@ -69,54 +69,7 @@ void printSubMenu5() {
     std::cout << "0. Quay lai" << std::endl;
 }
 
-void hienThiChiTietSinhVien(SinhVien* sv, StudentManager& manager) {
-    if (sv == nullptr) return;
-    
-    NganhHoc* nganhCuaSV = manager.findNganhHocByMa(sv->getMaNganh());
-    std::string tenNganh = (nganhCuaSV != nullptr) ? nganhCuaSV->getTenNganh() : "Khong xac dinh";
-
-    std::cout << "\n--- THONG TIN SINH VIEN ---" << std::endl;
-    std::cout << "MSSV: " << sv->getMSSV() << " | Ho ten: " << sv->getHoTen() << std::endl;
-    std::cout << "Lop: " << sv->getLop() << " | Nganh: " << tenNganh << " (" << sv->getMaNganh() << ")" << std::endl;
-    
-    std::cout << "\n--- KET QUA HOC TAP VA HOC PHI ---" << std::endl;
-    LinkedList<KetQuaHocTap*>& dsDiem = sv->getDanhSachDiem();
-    if (dsDiem.isEmpty()) {
-        std::cout << "Chua co du lieu diem." << std::endl;
-        return;
-    }
-
-    std::cout << std::left << std::setw(10) << "MaHP" 
-              << std::setw(25) << "Ten HP"
-              << std::setw(10) << "Diem QTr"
-              << std::setw(10) << "Diem CK"
-              << std::setw(10) << "Diem HP"
-              << std::setw(10) << "Diem Chu"
-              << std::setw(15) << "Hoc Phi (VND)" << std::endl;
-    std::cout << std::string(90, '-') << std::endl;
-
-    Node<KetQuaHocTap*>* current = dsDiem.getHead();
-    float tongHocPhiCaKy = 0;
-    while (current != nullptr) {
-        KetQuaHocTap* kq = current->data;
-        HocPhan* thongTinMon = manager.findHocPhanByMa(kq->getMaHP());
-        
-        std::string tenHP = (thongTinMon != nullptr) ? thongTinMon->getTenHP() : "Unknown";
-        float hocPhi = kq->tinhTongHocPhi(thongTinMon, nganhCuaSV);
-        tongHocPhiCaKy += hocPhi;
-
-        std::cout << std::left << std::setw(10) << kq->getMaHP()
-                  << std::setw(25) << tenHP.substr(0, 24)
-                  << std::setw(10) << kq->getDiemQTr()
-                  << std::setw(10) << kq->getDiemCK()
-                  << std::setw(10) << kq->getDiemHP()
-                  << std::setw(10) << kq->getDiemChu()
-                  << std::setw(15) << hocPhi << std::endl;
-        current = current->next;
-    }
-    std::cout << std::string(90, '-') << std::endl;
-    std::cout << "Tong hoc phi phai nop: " << tongHocPhiCaKy << " nghin VND\n" << std::endl;
-}
+// Old hienThiChiTietSinhVien function removed, using manager.displayBangDiemCaNhan instead.
 
 int main(int argc, const char * argv[]) {
     StudentManager manager;
@@ -233,20 +186,26 @@ int main(int argc, const char * argv[]) {
                         std::getline(std::cin, mssv);
                         
                         auto start = std::chrono::high_resolution_clock::now();
-                        SinhVien* sv = manager.findSinhVienByMSSV(mssv);
+                        manager.displayBangDiemCaNhan(mssv);
                         auto end = std::chrono::high_resolution_clock::now();
-                        std::chrono::duration<double, std::nano> duration = end - start;
-
-                        if (sv != nullptr) {
-                            hienThiChiTietSinhVien(sv, manager);
-                            std::cout << "[Thong ke] Thoi gian tim kiem bang Hash Map: " 
-                                      << std::fixed << std::setprecision(2) << duration.count() 
-                                      << " ns (O(1))" << std::endl;
-                        } else {
-                            std::cout << "Khong tim thay sinh vien co MSSV: " << mssv << std::endl;
-                        }
+                        std::chrono::duration<double, std::milli> duration = end - start;
+                        
+                        std::cout << "\n[Thong ke] Thoi gian hien thi: " 
+                                  << std::fixed << std::setprecision(3) << duration.count() 
+                                  << " ms" << std::endl;
                     } else if (subChoice == 2) {
-                        std::cout << "Chuc nang Hien thi bang diem tong hop cua Lop hoc phan dang duoc cap nhat..." << std::endl;
+                        std::string maLop;
+                        std::cout << "Nhap Ma Lop HP can xem bang diem: ";
+                        std::getline(std::cin, maLop);
+                        
+                        auto start = std::chrono::high_resolution_clock::now();
+                        manager.displayBangDiemLopHP(maLop);
+                        auto end = std::chrono::high_resolution_clock::now();
+                        std::chrono::duration<double, std::milli> duration = end - start;
+                        
+                        std::cout << "\n[Thong ke] Thoi gian hien thi: " 
+                                  << std::fixed << std::setprecision(3) << duration.count() 
+                                  << " ms" << std::endl;
                     } else {
                         std::cout << "Loi: Lua chon khong hop le!" << std::endl;
                     }
