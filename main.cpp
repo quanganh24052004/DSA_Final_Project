@@ -37,7 +37,7 @@ void printMainMenu() {
 
 void printSubMenu1() {
     std::cout << "\n--- 1. Quan Ly Danh Muc ---" << std::endl;
-    std::cout << "1. Quan ly Mon hoc" << std::endl;
+    std::cout << "1. Quan ly Hoc phan" << std::endl;
     std::cout << "2. Quan ly Lop hoc phan" << std::endl;
     std::cout << "3. Quan ly Sinh vien (Hien thi danh sach toan bo SV)" << std::endl;
     std::cout << "0. Quay lai" << std::endl;
@@ -45,7 +45,7 @@ void printSubMenu1() {
 
 void printSubMenu2() {
     std::cout << "\n--- 2. Quan Ly Diem & Ket Qua ---" << std::endl;
-    std::cout << "1. Nhap diem (Theo Ma SV + Ma mon hoc)" << std::endl;
+    std::cout << "1. Nhap diem (Theo Ma SV + Ma hoc phan)" << std::endl;
     std::cout << "2. Cap nhat / Sua diem" << std::endl;
     std::cout << "0. Quay lai" << std::endl;
 }
@@ -109,7 +109,7 @@ int main(int argc, const char * argv[]) {
                     if (subChoice == 0) break;
 
                     if (subChoice == 1) {
-                        std::cout << "Chuc nang quan ly Mon hoc dang duoc cap nhat..." << std::endl;
+                        std::cout << "Chuc nang quan ly Hoc phan dang duoc cap nhat..." << std::endl;
                     } else if (subChoice == 2) {
                         std::cout << "Chuc nang quan ly Lop hoc phan dang duoc cap nhat..." << std::endl;
                     } else if (subChoice == 3) {

@@ -352,7 +352,7 @@ public:
 
         std::cout << "\n=== BANG DIEM LOP HOC PHAN ===" << std::endl;
         std::cout << "Ma Lop: " << lhp->getMaLop() << " | Hoc Ky: " << lhp->getHocKy() << std::endl;
-        std::cout << "Mon hoc: [" << lhp->getMaHP() << "] " << tenHP << std::endl;
+        std::cout << "Hoc phan: [" << lhp->getMaHP() << "] " << tenHP << std::endl;
         
         std::cout << "+" << std::string(88, '-') << "+" << std::endl;
         std::cout << "| " << std::left << std::setw(10) << "MSSV"

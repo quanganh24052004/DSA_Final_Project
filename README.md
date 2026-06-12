@@ -15,12 +15,12 @@ Toàn bộ hệ thống được chia thành 4 module nghiệp vụ chính:
   - Mỗi thực thể đều được lưu trữ trực tiếp trên RAM thông qua các Hash Map độc lập, được quản lý tập trung tại `StudentManager`.
 
 ### Module 2: Báo Cáo & Hiển Thị Thông Tin
-- **Tra cứu Bảng điểm cá nhân:** Cho phép nhập MSSV để truy xuất ngay lập tức (O(1)) toàn bộ quá trình học tập của sinh viên. Trích xuất tên môn học, số tín chỉ, điểm thành phần và điểm tổng kết dưới định dạng bảng đẹp mắt.
+- **Tra cứu Bảng điểm cá nhân:** Cho phép nhập MSSV để truy xuất ngay lập tức (O(1)) toàn bộ quá trình học tập của sinh viên. Trích xuất tên học phần, số tín chỉ, điểm thành phần và điểm tổng kết dưới định dạng bảng đẹp mắt.
 - **Bảng điểm Lớp học phần:** Cho phép nhập Mã Lớp và in ra danh sách điểm của toàn bộ sinh viên trong lớp đó (O(K * M)) mà không làm rò rỉ bộ nhớ.
 
 ### Module 3: Thống Kê & Đánh Giá Học Lực
 - **Tính toán GPA & CPA (Thang điểm 4):**
-  - Tự động đối chiếu điểm số của sinh viên với số tín chỉ môn học để tính trung bình cộng có trọng số.
+  - Tự động đối chiếu điểm số của sinh viên với số tín chỉ học phần để tính trung bình cộng có trọng số.
   - Phân loại rõ ràng giữa GPA (Điểm của 1 học kỳ cụ thể) và CPA (Điểm tích lũy toàn khoá).
 - **Xếp loại học lực:** Ánh xạ CPA ra các mức độ (Xuất sắc, Giỏi, Khá, Trung bình, Yếu) theo quy chế đào tạo tín chỉ tiêu chuẩn.
 
