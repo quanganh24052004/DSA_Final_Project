@@ -44,6 +44,10 @@ public:
     static bool loadNganhHoc(const std::string& filePath, StudentManager& manager) {
         std::ifstream file(filePath);
         if (!file.is_open()) {
+            std::string altPath = (filePath.length() >= 3 && filePath.substr(0, 3) == "../") ? filePath.substr(3) : "../" + filePath;
+            file.open(altPath);
+        }
+        if (!file.is_open()) {
             std::cerr << "Loi: Khong the mo file NganhHoc: " << filePath << std::endl;
             return false;
         }
@@ -70,6 +74,10 @@ public:
 
     static bool loadHocPhan(const std::string& filePath, StudentManager& manager) {
         std::ifstream file(filePath);
+        if (!file.is_open()) {
+            std::string altPath = (filePath.length() >= 3 && filePath.substr(0, 3) == "../") ? filePath.substr(3) : "../" + filePath;
+            file.open(altPath);
+        }
         if (!file.is_open()) {
             std::cerr << "Loi: Khong the mo file HocPhan: " << filePath << std::endl;
             return false;
@@ -99,6 +107,10 @@ public:
 
     static bool loadSinhVien(const std::string& filePath, StudentManager& manager) {
         std::ifstream file(filePath);
+        if (!file.is_open()) {
+            std::string altPath = (filePath.length() >= 3 && filePath.substr(0, 3) == "../") ? filePath.substr(3) : "../" + filePath;
+            file.open(altPath);
+        }
         if (!file.is_open()) {
             std::cerr << "Loi: Khong the mo file SinhVien: " << filePath << std::endl;
             return false;
@@ -152,6 +164,10 @@ public:
     // Thêm tham số defaultMaHP để cứu cánh cho file điểm bị khuyết mã HP
     static bool loadDiem(const std::string& filePath, StudentManager& manager, const std::string& defaultMaHP) {
         std::ifstream file(filePath);
+        if (!file.is_open()) {
+            std::string altPath = (filePath.length() >= 3 && filePath.substr(0, 3) == "../") ? filePath.substr(3) : "../" + filePath;
+            file.open(altPath);
+        }
         if (!file.is_open()) {
             std::cerr << "Loi: Khong the mo file Diem: " << filePath << std::endl;
             return false;
@@ -230,6 +246,10 @@ public:
     // ==========================================
     static bool saveNganhHoc(const std::string& filePath, const StudentManager& manager) {
         std::ofstream file(filePath);
+        if (!file.is_open()) {
+            std::string altPath = (filePath.length() >= 3 && filePath.substr(0, 3) == "../") ? filePath.substr(3) : "../" + filePath;
+            file.open(altPath);
+        }
         if (!file.is_open()) return false;
         file << "MaNganh,TenNganh,HocPhiMotTin\n";
         LinkedList<NganhHoc*>* list = manager.getAllNganhHoc();
@@ -249,6 +269,10 @@ public:
 
     static bool saveHocPhan(const std::string& filePath, const StudentManager& manager) {
         std::ofstream file(filePath);
+        if (!file.is_open()) {
+            std::string altPath = (filePath.length() >= 3 && filePath.substr(0, 3) == "../") ? filePath.substr(3) : "../" + filePath;
+            file.open(altPath);
+        }
         if (!file.is_open()) return false;
         file << "MaHP,TenHP,SoTinChi,SoTinChiHocPhi\n";
         LinkedList<HocPhan*>* list = manager.getAllHocPhan();
@@ -268,6 +292,10 @@ public:
 
     static bool saveSinhVien(const std::string& filePath, const StudentManager& manager) {
         std::ofstream file(filePath);
+        if (!file.is_open()) {
+            std::string altPath = (filePath.length() >= 3 && filePath.substr(0, 3) == "../") ? filePath.substr(3) : "../" + filePath;
+            file.open(altPath);
+        }
         if (!file.is_open()) return false;
         file << "MSSV,HoTen,MaNganh,Lop,TruongKhoa,KhoaHoc,NamNhapHoc,NgaySinh,GioiTinh,NoiSinh,DanToc,SDT,EmailTruong,EmailCaNhan,TrangThaiHT,PhuongThucXT,QueQuan\n";
         LinkedList<SinhVien*>* list = manager.getAllSinhVien();
@@ -291,6 +319,10 @@ public:
 
     static bool saveDiem(const std::string& filePath, const StudentManager& manager) {
         std::ofstream file(filePath);
+        if (!file.is_open()) {
+            std::string altPath = (filePath.length() >= 3 && filePath.substr(0, 3) == "../") ? filePath.substr(3) : "../" + filePath;
+            file.open(altPath);
+        }
         if (!file.is_open()) return false;
         file << "MSSV,MaLop,MaHP,DiemQTr,DiemCK,DiemHP,DiemChu,Thang4\n";
         LinkedList<SinhVien*>* list = manager.getAllSinhVien();
