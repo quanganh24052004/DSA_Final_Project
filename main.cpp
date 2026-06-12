@@ -39,7 +39,8 @@ void printSubMenu1() {
     std::cout << "\n--- 1. Quan Ly Danh Muc ---" << std::endl;
     std::cout << "1. Quan ly Hoc phan" << std::endl;
     std::cout << "2. Quan ly Lop hoc phan" << std::endl;
-    std::cout << "3. Quan ly Sinh vien (Hien thi danh sach toan bo SV)" << std::endl;
+    std::cout << "3. Quan ly Sinh vien" << std::endl;
+    std::cout << "4. Quan ly Nganh hoc" << std::endl;
     std::cout << "0. Quay lai" << std::endl;
 }
 
@@ -98,7 +99,7 @@ int main(int argc, const char * argv[]) {
                 int subChoice = -1;
                 while (true) {
                     printSubMenu1();
-                    std::cout << "Nhap lua chon (0-3): ";
+                    std::cout << "Nhap lua chon (0-4): ";
                     if (!(std::cin >> subChoice)) {
                         std::cout << "Loi: Vui long nhap so nguyen hop le!" << std::endl;
                         clearInputBuffer();
@@ -202,8 +203,93 @@ int main(int argc, const char * argv[]) {
                             }
                         }
                     } else if (subChoice == 3) {
-                        std::cout << "\nDanh sach toan bo sinh vien (" << manager.getStudentCount() << " records):" << std::endl;
-                        manager.printAll();
+                        int svChoice = -1;
+                        while (true) {
+                            std::cout << "\n--- Quan Ly Sinh Vien ---\n1. Them sinh vien\n2. Cap nhat thong tin\n3. Xoa sinh vien\n4. Hien thi tat ca\n0. Quay lai\nNhap lua chon: ";
+                            if (!(std::cin >> svChoice)) {
+                                std::cout << "Loi nhap lieu!\n"; clearInputBuffer(); continue;
+                            }
+                            clearInputBuffer();
+                            if (svChoice == 0) break;
+                            if (svChoice == 1) {
+                                std::string mssv, ten, malop, manganh;
+                                std::cout << "MSSV: "; std::getline(std::cin, mssv);
+                                std::cout << "Ho va Ten: "; std::getline(std::cin, ten);
+                                std::cout << "Ma Lop (vd MI1.01): "; std::getline(std::cin, malop);
+                                std::cout << "Ma Nganh (vd MI1): "; std::getline(std::cin, manganh);
+                                SinhVien* sv = new SinhVien();
+                                sv->setMSSV(mssv);
+                                sv->setHoTen(ten);
+                                sv->setLop(malop);
+                                sv->setMaNganh(manganh);
+                                if (manager.addSinhVien(sv)) std::cout << "Them thanh cong!\n";
+                                else { std::cout << "MSSV da ton tai!\n"; delete sv; }
+                            } else if (svChoice == 2) {
+                                std::string mssv, ten, malop, manganh;
+                                std::cout << "MSSV can sua: "; std::getline(std::cin, mssv);
+                                SinhVien* oldSv = manager.findSinhVienByMSSV(mssv);
+                                if (oldSv) {
+                                    std::cout << "Ho ten moi: "; std::getline(std::cin, ten);
+                                    std::cout << "Ma Lop moi: "; std::getline(std::cin, malop);
+                                    std::cout << "Ma Nganh moi: "; std::getline(std::cin, manganh);
+                                    oldSv->setHoTen(ten); oldSv->setLop(malop); oldSv->setMaNganh(manganh);
+                                    std::cout << "Cap nhat thanh cong!\n";
+                                } else std::cout << "Khong tim thay MSSV!\n";
+                            } else if (svChoice == 3) {
+                                std::string mssv;
+                                std::cout << "MSSV can xoa: "; std::getline(std::cin, mssv);
+                                if (manager.removeSinhVien(mssv)) std::cout << "Xoa thanh cong!\n";
+                                else std::cout << "Khong tim thay MSSV!\n";
+                            } else if (svChoice == 4) {
+                                std::cout << "\nDanh sach toan bo sinh vien (" << manager.getStudentCount() << " records):" << std::endl;
+                                manager.printAll();
+                            }
+                        }
+                    } else if (subChoice == 4) {
+                        int nghChoice = -1;
+                        while (true) {
+                            std::cout << "\n--- Quan Ly Nganh Hoc ---\n1. Them nganh hoc\n2. Cap nhat nganh hoc\n3. Xoa nganh hoc\n4. Hien thi tat ca\n0. Quay lai\nNhap lua chon: ";
+                            if (!(std::cin >> nghChoice)) {
+                                std::cout << "Loi nhap lieu!\n"; clearInputBuffer(); continue;
+                            }
+                            clearInputBuffer();
+                            if (nghChoice == 0) break;
+                            if (nghChoice == 1) {
+                                std::string ma, ten; float hocPhi;
+                                std::cout << "Ma Nganh: "; std::getline(std::cin, ma);
+                                std::cout << "Ten Nganh: "; std::getline(std::cin, ten);
+                                std::cout << "Hoc Phi 1 Tin: "; std::cin >> hocPhi; clearInputBuffer();
+                                NganhHoc* nganh = new NganhHoc(ma, ten, hocPhi);
+                                if (manager.addNganhHoc(nganh)) std::cout << "Them thanh cong!\n";
+                                else { std::cout << "Ma Nganh da ton tai!\n"; delete nganh; }
+                            } else if (nghChoice == 2) {
+                                std::string ma, ten; float hocPhi;
+                                std::cout << "Ma Nganh can sua: "; std::getline(std::cin, ma);
+                                NganhHoc* oldNganh = manager.findNganhHocByMa(ma);
+                                if (oldNganh) {
+                                    std::cout << "Ten Nganh moi: "; std::getline(std::cin, ten);
+                                    std::cout << "Hoc Phi 1 Tin moi: "; std::cin >> hocPhi; clearInputBuffer();
+                                    oldNganh->setTenNganh(ten); oldNganh->setHocPhiMotTin(hocPhi);
+                                    std::cout << "Cap nhat thanh cong!\n";
+                                } else std::cout << "Khong tim thay Ma Nganh!\n";
+                            } else if (nghChoice == 3) {
+                                std::string ma;
+                                std::cout << "Ma Nganh can xoa: "; std::getline(std::cin, ma);
+                                if (manager.removeNganhHoc(ma)) std::cout << "Xoa thanh cong!\n";
+                                else std::cout << "Khong tim thay Ma Nganh!\n";
+                            } else if (nghChoice == 4) {
+                                LinkedList<NganhHoc*>* list = manager.getAllNganhHoc();
+                                if (!list || list->isEmpty()) std::cout << "Danh sach trong.\n";
+                                else {
+                                    Node<NganhHoc*>* curr = list->getHead();
+                                    while(curr) {
+                                        std::cout << curr->data->getMaNganh() << " - " << curr->data->getTenNganh() << " (Hoc phi: " << curr->data->getHocPhiMotTin() << ")\n";
+                                        curr = curr->next;
+                                    }
+                                }
+                                if (list) delete list;
+                            }
+                        }
                     } else {
                         std::cout << "Loi: Lua chon khong hop le!" << std::endl;
                     }
