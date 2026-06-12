@@ -1,284 +1,169 @@
-# Viết giả mã cho các thuật toán
+# Phân tích Thuật toán và Mã giả
+
 ## 1. Module Thao Tác Dữ Liệu Gốc
 ### 1.1. Chức năng Quản lý Sinh Viên
+
 #### a. Thêm sinh viên mới (`addSinhVien`)
-```
+
+**1. Mục đích:**
+Thêm một đối tượng sinh viên mới vào hệ thống thông qua Bảng băm `danhSachSinhVien`. Đảm bảo tính duy nhất của Mã số sinh viên (MSSV).
+
+**2. Đầu vào (Input):**
+- `sv`: Con trỏ tới đối tượng `SinhVien` cần thêm.
+
+**3. Đầu ra (Output):**
+- Trả về `true` nếu thêm thành công.
+- Trả về `false` nếu con trỏ `sv` bị `NULL` hoặc MSSV đã tồn tại trong hệ thống.
+
+**4. Mã giả (Pseudocode):**
+```cpp
     bool addSinhVien(SinhVien* sv) {
         if sv == NULL then return false;
-        if danhSachSinhVien.get(sv->getMSSV()) != NULL then return false;   // Sinh viên đã tồn tại, không thể thêm
-
+        
+        // Kiểm tra xem MSSV đã tồn tại trong Bảng băm chưa
+        if danhSachSinhVien.get(sv->getMSSV()) != NULL then 
+            return false;
+            
+        // Thêm vào Bảng băm
         danhSachSinhVien.put(sv->getMSSV(), sv);
         return true;
     }
 ```
-- Chú thích:
-    + Các đối tượng:
-        + `SinhVien`.
-        + `danhSachSinhVien` (là bảng băm).
-    + Các hàm được gọi:
-        + `sv->getMSSV()`: Hàm của đối tượng `SinhVien`, trả về MSSV.
-        + `danhSachSinhVien.get`: Hàm của bảng băm `danhSachSinhVien`, trả về con trỏ của đối tượng sinh viên thông qua MSSV.
-        + `danhSachSinhVien.put`: Hàm của bảng băm `danhSachSinhVien`, trả về `true` nếu thành công nạp sinh viên vào bảng băm.
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
+
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(1)$ trung bình. Bảng băm tra cứu và chèn phần tử với thời gian hằng số.
+- **Độ phức tạp không gian:** $O(1)$. Chỉ tốn thêm chi phí lưu trữ một con trỏ vào Bảng băm.
+
+---
 
 #### b. Cập nhật thông tin sinh viên (`updateSinhVien`)
-```
+
+**1. Mục đích:**
+Cập nhật dữ liệu của một sinh viên đã tồn tại trong hệ thống thông qua việc ghi đè lên Bảng băm.
+
+**2. Đầu vào (Input):**
+- `sv`: Con trỏ tới đối tượng `SinhVien` chứa thông tin mới.
+
+**3. Đầu ra (Output):**
+- Trả về `true` nếu cập nhật thành công.
+- Trả về `false` nếu `sv` bị `NULL` hoặc MSSV chưa tồn tại trong hệ thống.
+
+**4. Mã giả (Pseudocode):**
+```cpp
     bool updateSinhVien(SinhVien* sv) {
         if sv == NULL then return false;
-        if danhSachSinhVien.get(sv->getMSSV()) == NULL then return false;    // Sinh viên chưa tồn tại để update
+        
+        // Kiểm tra sinh viên có tồn tại không
+        if danhSachSinhVien.get(sv->getMSSV()) == NULL then 
+            return false;
 
+        // Cập nhật bằng cách ghi đè trong Bảng băm
         danhSachSinhVien.put(sv->getMSSV(), sv);
         return true;
     }
 ```
-- Chú thích:
-    + Các đối tượng: `SinhVien`, `danhSachSinhVien` (là bảng băm).
-    + Các hàm được gọi: `sv->getMSSV()`, `danhSachSinhVien.get`, `danhSachSinhVien.put`(xem 1.1.a).
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
 
-#### c. Xóa thông tin sinh viên (removeSinhVien)
-```
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(1)$ trung bình. Tra cứu và ghi đè trên Bảng băm.
+- **Độ phức tạp không gian:** $O(1)$.
+
+---
+
+#### c. Xóa thông tin sinh viên (`removeSinhVien`)
+
+**1. Mục đích:**
+Xoá bỏ hoàn toàn thông tin của một sinh viên khỏi hệ thống, đồng thời giải phóng bộ nhớ đã cấp phát.
+
+**2. Đầu vào (Input):**
+- `mssv`: Mã số sinh viên (chuỗi) cần xoá.
+
+**3. Đầu ra (Output):**
+- Trả về `true` nếu xoá và giải phóng bộ nhớ thành công.
+- Trả về `false` nếu không tìm thấy MSSV.
+
+**4. Mã giả (Pseudocode):**
+```cpp
     bool removeSinhVien(string mssv) {
         SinhVien* sv = danhSachSinhVien.get(mssv);
+        
         if sv != NULL then {
+            // Ngắt kết nối trong Bảng băm
             if danhSachSinhVien.remove(mssv) == true then {
-                delete sv;
+                delete sv; // Giải phóng bộ nhớ trên Heap
                 return true;
             }
         }
         return false;
     }
 ```
-- Chú thích:
-    + Các đối tượng: `SinhVien`, `danhSachSinhVien` (là bảng băm).
-    + Các hàm được gọi:
-        + `danhSachSinhVien.get` (xem 1.1.a.).
-        + `danhSachSinhVien.remove`: Hàm của bảng băm `danhSachSinhVien`, trả về `true` nếu thành công xoá sinh viên khỏi bảng băm.
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
 
-#### d. Một số hàm phụ trợ
-```
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(1)$ trung bình. Tra cứu và loại bỏ node trong chuỗi Separate Chaining của Bảng băm.
+- **Độ phức tạp không gian:** $O(1)$.
+
+---
+
+#### d. Tra cứu sinh viên theo MSSV (`findSinhVienByMSSV`)
+
+**1. Mục đích:**
+Tìm kiếm và trả về địa chỉ đối tượng sinh viên khi biết MSSV.
+
+**2. Đầu vào (Input):**
+- `mssv`: Mã số sinh viên (chuỗi).
+
+**3. Đầu ra (Output):**
+- Con trỏ `SinhVien*` tới đối tượng tìm thấy, hoặc `NULL` nếu không tồn tại.
+
+**4. Mã giả (Pseudocode):**
+```cpp
     SinhVien* findSinhVienByMSSV(string mssv) {
         return danhSachSinhVien.get(mssv);
     }
+```
 
-    size_t getStudentCount() {
-        return danhSachSinhVien.getSize();
-    }
-```
-- Chú thích:
-    + Các đối tượng: `SinhVien`, `danhSachSinhVien` (là bảng băm).
-    + Các hàm được gọi:
-        + `danhSachSinhVien.get` (xem 1.1.a.).
-        + `danhSachSinhVien.getSize()`: Hàm của bảng băm `danhSachSinhVien`, trả về số nút có trong bảng băm.
-- Độ phức tạp (cho cả hai hàm):
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(1)$ trung bình.
+- **Độ phức tạp không gian:** $O(1)$.
 
-### 1.2. Chức năng Quản lý Ngành học
-#### a. Thêm ngành học mới (`addNganhHoc`)
-```
-    bool addNganhHoc(NganhHoc* nh) {
-        if nh == NULL then return false;
-        if danhSachNganhHoc.get(nh->getMaNganh()) != NULL then return false;    // Ngành học đã tồn tại để thêm
+---
 
-        danhSachNganhHoc.put(nh->getMaNganh(), nh);
-        return true;
-    }
-```
-- Chú thích:
-    + Các đối tượng:
-        + `NganhHoc`.
-        + `danhSachNganhHoc` (là bảng băm).
-    + Các hàm được gọi:
-        + `nh->getMaNganh()`: Hàm của đối tượng `NganhHoc`, trả về mã ngành học.
-        + `danhSachNganhHoc.get`: Hàm của bảng băm `danhSachNganhHoc`, trả về con trỏ của đối tượng ngành học thông qua mã ngành.
-        + `danhSachNganhHoc.put`: Hàm của bảng băm `danhSachNganhHoc`, trả về `true` nếu thành công nạp ngành học vào bảng băm.
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
+### 1.2. Chức năng Quản lý Ngành Học
 
-#### b. Cập nhật thông tin ngành học (`updateNganhHoc`)
-```
-    bool updateNganhHoc(NganhHoc* nh) {
-        if nh == NULL then return false;
-        if danhSachNganhHoc.get(nh->getMaNganh()) == NULL then return false;    // Ngành học chưa tồn tại để update
+*(Cấu trúc các hàm `addNganhHoc`, `updateNganhHoc`, `removeNganhHoc`, `findNganhHocByMa` hoạt động hoàn toàn tương tự module Quản lý Sinh viên, áp dụng trên bảng băm `danhSachNganhHoc` bằng khoá là `Mã Ngành`).*
 
-        danhSachNganhHoc.put(nh->getMaNganh(), nh);
-        return true;
-    }
-```
-- Chú thích:
-    + Các đối tượng: `NganhHoc`, `danhSachNganhHoc` (là bảng băm).
-    + Các hàm được gọi: `nh->getMaNganh()`, `danhSachNganhHoc.get`, `danhSachNganhHoc.put` (xem 1.2.a.).
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
+**Độ phức tạp chung:**
+- **Thời gian:** $O(1)$ trung bình cho mọi thao tác CRUD do ứng dụng Bảng băm.
+- **Không gian:** $O(1)$.
 
-#### c. Xóa thông tin ngành học (`removeNganhHoc`)
-```
-    bool removeNganhHoc(string maNganh) {
-        NganhHoc* nh = danhSachNganhHoc.get(maNganh);
-        if nh != NULL then {
-            if danhSachNganhHoc.remove(maNganh) == true then {
-                delete nh;
-                return true;
-            }
-        }
-        return false;
-    }
-```
-- Chú thích:
-    + Các đối tượng: `NganhHoc`, `danhSachNganhHoc` (là bảng băm).
-    + Các hàm được gọi:
-        + `danhSachNganhHoc.get` (xem 1.2.a.).
-        + `danhSachNganhHoc.remove`: Hàm của bảng băm danh sách ngành học.
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
-
-#### d. Một số hàm phụ trợ
-```
-    NganhHoc* findNganhHocByMa(string maNganh) {
-        return danhSachNganhHoc.get(maNganh);
-    }
-```
-- Chú thích:
-    + Các đối tượng: `NganhHoc`, `danhSachNganhHoc` (là bảng băm).
-    + Các hàm được gọi: `danhSachNganhHoc.get` (xem 1.2.a.).
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
+---
 
 ### 1.3. Chức năng Quản lý Học Phần
-#### a. Thêm học phần mới (`addHocPhan`)
-```
-    bool addHocPhan(HocPhan* hp) {
-        if hp == NULL then return false;
-        if danhSachHocPhan.get(hp->getMaHP()) != NULL then return false;   // Học phần đã tồn tại, không thể thêm
 
-        danhSachHocPhan.put(hp->getMaHP(), hp);
-        return true;
-    }
-```
-- Chú thích:
-    + Các đối tượng:
-        + `HocPhan`.
-        + `danhSachHocPhan` (là bảng băm).
-    + Các hàm được gọi:
-        + `hp->getMaHP()`: Hàm của đối tượng `HocPhan`, trả về mã học phần.
-        + `danhSachHocPhan.get`: Hàm của bảng băm `danhSachHocPhan`, trả về con trỏ của đối tượng học phần thông qua mã học phần.
-        + `danhSachHocPhan.put`: Hàm của bảng băm `danhSachHocPhan`, trả về `true` nếu thành công nạp học phần vào bảng băm.
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
+*(Cấu trúc các hàm `addHocPhan`, `updateHocPhan`, `removeHocPhan`, `findHocPhanByMa` hoạt động hoàn toàn tương tự module Quản lý Sinh viên, áp dụng trên bảng băm `danhSachHocPhan` bằng khoá là `Mã Học phần`).*
 
-#### b. Cập nhật thông tin học phần (`updateHocPhan`)
-```
-    bool updateHocPhan(HocPhan* hp) {
-        if hp == NULL then return false;
-        if danhSachHocPhan.get(hp->getMaHP()) == NULL then return false;    // Học phần chưa tồn tại để update
+**Độ phức tạp chung:**
+- **Thời gian:** $O(1)$ trung bình cho mọi thao tác CRUD do ứng dụng Bảng băm.
+- **Không gian:** $O(1)$.
 
-        danhSachHocPhan.put(hp->getMaHP(), hp);
-        return true;
-    }
-```
-- Chú thích:
-    + Các đối tượng: `HocPhan`, `danhSachHocPhan` (là bảng băm).
-    + Các hàm được gọi: `hp->getMaHP()`, `danhSachHocPhan.get`, `danhSachHocPhan.put` (xem 1.3.a).
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
-
-#### c. Xóa thông tin học phần (`removeHocPhan`)
-```
-    bool removeHocPhan(string maHP) {
-        HocPhan* hp = danhSachHocPhan.get(maHP);
-        if hp != NULL then {
-            if danhSachHocPhan.remove(maHP) == true then {
-                delete hp;
-                return true;
-            }
-        }
-        return false;
-    }
-```
-- Chú thích:
-    + Các đối tượng: `HocPhan`, `danhSachHocPhan` (là bảng băm).
-    + Các hàm được gọi:
-        + `danhSachHocPhan.get` (xem 1.3.a.).
-        + `danhSachHocPhan.remove`: Hàm của bảng băm `danhSachHocPhan`, trả về `true` nếu thành công xoá học phần khỏi bảng băm.
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
-
-#### d. Một số hàm phụ trợ
-```
-    HocPhan* findHocPhanByMa(string maHP) {
-        return danhSachHocPhan.get(maHP);
-    }
-```
-- Chú thích:
-    + Các đối tượng: `HocPhan`, `danhSachHocPhan` (là bảng băm).
-    + Các hàm được gọi:
-        + `danhSachHocPhan.get` (xem 1.3.a.).
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
+---
 
 ### 1.4. Chức năng Quản lý Lớp Học Phần
-#### a. Thêm lớp học phần mới (`addLopHocPhan`)
-```
-    bool addLopHocPhan(LopHocPhan* lhp) {
-        if lhp == NULL then return false;
-        if danhSachLopHocPhan.get(lhp->getMaLop()) != NULL then return false;   // Lớp học phần đã tồn tại
 
-        danhSachLopHocPhan.put(lhp->getMaLop(), lhp);
-        return true;
-    }
-```
-- Chú thích:
-    + Các đối tượng:
-        + `LopHocPhan`.
-        + `danhSachLopHocPhan` (là bảng băm).
-    + Các hàm được gọi:
-        + `lhp->getMaLop()`: Hàm của đối tượng `LopHocPhan`, trả về mã lớp học phần.
-        + `danhSachLopHocPhan.get`: Hàm của bảng băm `danhSachLopHocPhan`, trả về con trỏ của đối tượng lớp học phần thông qua mã lớp.
-        + `danhSachLopHocPhan.put`: Hàm của bảng băm `danhSachLopHocPhan`, trả về `true` nếu thành công nạp lớp học phần vào bảng băm.
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
+#### a. Đăng ký sinh viên vào lớp học phần (`registerSinhVienToLop`)
 
-#### b. Xóa thông tin lớp học phần (`removeLopHocPhan`)
-```
-    bool removeLopHocPhan(string maLop) {
-        LopHocPhan* lhp = danhSachLopHocPhan.get(maLop);
-        if lhp != NULL then {
-            if danhSachLopHocPhan.remove(maLop) == true then {
-                delete lhp;
-                return true;
-            }
-        }
-        return false;
-    }
-```
-- Chú thích:
-    + Các đối tượng: `LopHocPhan`, `danhSachLopHocPhan` (là bảng băm).
-    + Các hàm được gọi:
-        + `danhSachLopHocPhan.get` (xem 1.4.a.).
-        + `danhSachLopHocPhan.remove`: Hàm của bảng băm `danhSachLopHocPhan`, trả về `true` nếu thành công xoá lớp học phần khỏi bảng băm.
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
+**1. Mục đích:**
+Đăng ký một sinh viên vào danh sách của một lớp học phần cụ thể.
 
-#### c. Đăng ký sinh viên vào lớp học phần (`registerSinhVienToLop`)
-```
+**2. Đầu vào (Input):**
+- `mssv`: Mã số sinh viên (chuỗi).
+- `maLop`: Mã lớp học phần (chuỗi).
+
+**3. Đầu ra (Output):**
+- Trả về `true` nếu đăng ký thành công.
+- Trả về `false` nếu không tìm thấy sinh viên, không tìm thấy lớp, hoặc sinh viên đã có trong danh sách của lớp đó.
+
+**4. Mã giả (Pseudocode):**
+```cpp
     bool registerSinhVienToLop(string mssv, string maLop) {
         SinhVien* sv = findSinhVienByMSSV(mssv);
         LopHocPhan* lhp = findLopHocPhanByMa(maLop);
@@ -289,18 +174,28 @@
         return false;
     }
 ```
-- Chú thích:
-    + Các đối tượng: `SinhVien`, `LopHocPhan`.
-    + Các hàm được gọi:
-        + `findSinhVienByMSSV`: Hàm phụ trợ trả về con trỏ đối tượng sinh viên qua MSSV.
-        + `findLopHocPhanByMa`: Hàm phụ trợ trả về con trỏ đối tượng lớp học phần qua mã lớp.
-        + `lhp->addSinhVien`: Hàm của đối tượng `LopHocPhan` để thêm sinh viên vào danh sách lớp đó, trả về `true` nếu thêm thành công.
-- Độ phức tạp:
-        + Thời gian: Trung bình $O(K)$. (Với $K$ là số sinh viên trong lớp. Tra cứu sinh viên/lớp mất $O(1)$, hàm `addSinhVien` của lớp học phần phải duyệt qua $K$ sinh viên hiện tại để kiểm tra trùng lặp trước khi thêm).
-        + Không gian: $O(1)$.
 
-#### d. Hủy đăng ký sinh viên khỏi lớp học phần (`unregisterSinhVienFromLop`)
-```
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(K)$ trung bình. Với $K$ là số lượng sinh viên đang đăng ký trong lớp học phần đó. Việc tra cứu `sv` và `lhp` thông qua Bảng băm mất $O(1)$. Tuy nhiên, phương thức `addSinhVien` của `LopHocPhan` cần duyệt qua danh sách liên kết $K$ phần tử để kiểm tra sự trùng lặp (chống đăng ký 2 lần) trước khi chèn vào cuối.
+- **Độ phức tạp không gian:** $O(1)$.
+
+---
+
+#### b. Hủy đăng ký sinh viên khỏi lớp học phần (`unregisterSinhVienFromLop`)
+
+**1. Mục đích:**
+Loại bỏ hoàn toàn một sinh viên khỏi danh sách của lớp học phần.
+
+**2. Đầu vào (Input):**
+- `mssv`: Mã số sinh viên (chuỗi).
+- `maLop`: Mã lớp học phần (chuỗi).
+
+**3. Đầu ra (Output):**
+- Trả về `true` nếu loại bỏ thành công.
+- Trả về `false` nếu thao tác thất bại.
+
+**4. Mã giả (Pseudocode):**
+```cpp
     bool unregisterSinhVienFromLop(string mssv, string maLop) {
         SinhVien* sv = findSinhVienByMSSV(mssv);
         LopHocPhan* lhp = findLopHocPhanByMa(maLop);
@@ -311,75 +206,84 @@
         return false;
     }
 ```
-- Chú thích:
-    + Các đối tượng: `SinhVien`, `LopHocPhan`.
-    + Các hàm được gọi:
-        + `findSinhVienByMSSV`, `findLopHocPhanByMa` (xem 1.4.c).
-        + `lhp->removeSinhVien`: Hàm của đối tượng `LopHocPhan`, dùng để xoá sinh viên khỏi danh sách của lớp đó.
-- Độ phức tạp:
-        + Thời gian: Trung bình $O(K)$. (Với $K$ là số sinh viên trong lớp. Tra cứu sinh viên/lớp mất $O(1)$, thao tác `remove` phải duyệt qua danh sách trong lớp học phần kích thước $K$ để tìm nút cần xóa).
-        + Không gian: $O(1)$.
 
-#### e. Một số hàm phụ trợ
-```
-    LopHocPhan* findLopHocPhanByMa(string maLop) {
-        return danhSachLopHocPhan.get(maLop);
-    }
-```
-- Chú thích:
-    + Các đối tượng: `LopHocPhan`, `danhSachLopHocPhan` (là bảng băm).
-    + Các hàm được gọi:
-        + `danhSachLopHocPhan.get` (xem 1.4.a.).
-- Độ phức tạp:
-        + Thời gian: $O(1)$ trung bình với bảng băm.
-        + Không gian: $O(1)$.
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(K)$ trung bình. Với $K$ là số sinh viên trong lớp học phần. Thao tác `removeSinhVien` của đối tượng lớp học phần cần duyệt dọc theo danh sách liên kết để tìm chính xác nút sinh viên và loại bỏ nó.
+- **Độ phức tạp không gian:** $O(1)$.
+
+---
 
 ### 1.5. Chức năng Quản lý Kết quả học tập
+
 #### a. Thêm kết quả học tập (`addDiem`)
-```
+
+**1. Mục đích:**
+Ghi nhận kết quả học tập (điểm quá trình, điểm cuối kỳ) của một sinh viên vào hệ thống. Tự động tính toán điểm hệ chữ và hệ 4.
+
+**2. Đầu vào (Input):**
+- `mssv`: Mã số sinh viên.
+- `maLop`: Mã lớp học phần.
+- `maHP`: Mã học phần.
+- `diemQTr`, `diemCK`: Điểm quá trình và điểm cuối kỳ.
+- `trongSoQTr`: Trọng số điểm quá trình (mặc định là 0.3).
+
+**3. Đầu ra (Output):**
+- Trả về `true` nếu ghi nhận thành công.
+
+**4. Mã giả (Pseudocode):**
+```cpp
     bool addDiem(string mssv, string maLop, string maHP, float diemQTr, float diemCK, float trongSoQTr) {
         SinhVien* sv = findSinhVienByMSSV(mssv);
         if sv == NULL then return false;
     
-        // Tính toán điểm số, gán đối tượng kết quả
+        // Tính toán các hệ số điểm
         float diemHP = diemQTr * trongSoQTr + diemCK * (1.0 - trongSoQTr);
         KetQuaHocTap* kq = new KetQuaHocTap(maLop, maHP, diemQTr, diemCK, diemHP, xepLoaiDiemChu(diemHP), quyDoiHe4(diemHP));
     
-        // Kiểm tra mã lớp đã tồn tại chưa ngay trong thực thể SinhVien
+        // Thêm vào danh sách điểm lưu trữ tại thực thể SinhVien
         if sv->themKetQuaHocTap(kq) == true then {
             return true;
         } else {
-            delete kq;  // Nếu SinhVien báo trùng (false), huỷ vùng nhớ vừa cấp phát
+            // Giải phóng bộ nhớ nếu mã lớp học phần đã có sẵn (trùng)
+            delete kq;  
             return false;
         }
     }
 ```
-- Chú thích:
-    + Các đối tượng: `SinhVien`, `KetQuaHocTap`.
-    + Các hàm được gọi:
-        + `findSinhVienByMSSV`: Hàm phụ trợ trả về con trỏ của đối tượng sinh viên qua MSSV (xem 1.1.d.).
-        + `xepLoaiDiemChu`, `quyDoiHe4`: Các hàm phụ trợ quy đổi điểm (xem 1.5.d.).
-        + `sv->themKetQuaHocTap`: Hàm của đối tượng `SinhVien`, dùng để nạp đối tượng điểm mới vào danh sách điểm của sinh viên; trả về `true` nếu thêm thành công, hoặc `false` nếu mã lớp học phần (`maLop`) đã tồn tại.
-- Độ phức tạp:
-        + Thời gian: Trung bình $O(M)$. (Với $M$ là số học phần một sinh viên đã học. Phải duyệt qua danh sách điểm có kích thước $M$ của sinh viên đó để kiểm tra trùng mã lớp khi thêm).
-        + Không gian: $O(1)$.
 
-#### b. Cập nhật thông tin điểm số (`updateDiem`)
-```
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(M)$. Với $M$ là tổng số học phần mà sinh viên đó đã tích lũy. Hàm `themKetQuaHocTap` phải duyệt dọc qua chuỗi $M$ kết quả học tập cũ để bảo đảm rằng `maLop` này chưa từng tồn tại, chống hiện tượng ghi đè dữ liệu sai trái.
+- **Độ phức tạp không gian:** $O(1)$. Hệ thống chỉ tiêu tốn thêm lượng không gian hằng số để cấp phát một đối tượng `KetQuaHocTap` mới trên Heap.
+
+---
+
+#### b. Cập nhật & Xóa thông tin điểm số (`updateDiem` & `removeDiem`)
+
+**1. Mục đích:**
+Điều chỉnh hoặc xoá bỏ một kết quả học tập khi phát hiện sai sót trong quá trình nhập liệu.
+
+**2. Đầu vào (Input):**
+- Khóa định danh: `mssv` (để xác định sinh viên) và `maLop` (để xác định kết quả của lớp học phần cụ thể).
+- Các tham số mới (đối với hành động Cập nhật).
+
+**3. Đầu ra (Output):**
+- Trả về `true` nếu tìm thấy và sửa/xoá thành công.
+- Trả về `false` nếu không tìm thấy.
+
+**4. Mã giả (Ví dụ cho Cập nhật điểm):**
+```cpp
     bool updateDiem(string mssv, string maLop, float diemQTrMoi, float diemCKMoi, float trongSoQTr) {
         SinhVien* sv = findSinhVienByMSSV(mssv);
         if sv == NULL then return false;
         
-        // Duyệt danh sách điểm để tìm điểm cần cập nhật (theo mã lớp)
+        // Duyệt danh sách điểm để tìm nút tương ứng với mã lớp
         Node* current = sv->getDanhSachDiem().getHead();
         while current != NULL do {
             if current->data->getMaLop() == maLop then {
                 float diemHP = diemQTrMoi * trongSoQTr + diemCKMoi * (1.0 - trongSoQTr);
                 current->data->setDiemQTr(diemQTrMoi);
                 current->data->setDiemCK(diemCKMoi);
-                current->data->setDiemHP(diemHP);
-                current->data->setDiemChu(xepLoaiDiemChu(diemHP));
-                current->data->setThang4(quyDoiHe4(diemHP));
+                // Cập nhật lại các thuộc tính phụ trợ (điểm chữ, hệ 4)...
                 return true;
             }
             current = current->next;
@@ -388,253 +292,175 @@
     }
 ```
 
-- Chú thích:
-    + Các đối tượng: `SinhVien`.
-    + Các hàm được gọi:
-        + `findSinhVienByMSSV`, `xepLoaiDiemChu`, `quyDoiHe4`.
-        + `sv->getDanhSachDiem().getHead()`: Truy xuất nút đầu tiên của danh sách điểm.
-        + `current->data->getMaLop()`: Lấy mã lớp từ đối tượng điểm để so sánh.
-        + Các hàm `set...`: Cập nhật lại các trường dữ liệu điểm bên trong đối tượng `KetQuaHocTap`.
-- Độ phức tạp:
-        + Thời gian: Trung bình $O(M)$. (Với $M$ là số học phần một sinh viên đã học. Phải tìm kiếm mã lớp trong danh sách điểm có kích thước $M$ của sinh viên đó để cập nhật).
-        + Không gian: $O(1)$.
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(M)$. Quá trình tìm kiếm `maLop` trong danh sách liên kết có kích thước $M$ của sinh viên là bắt buộc.
+- **Độ phức tạp không gian:** $O(1)$.
 
-#### c. Xóa thông tin điểm số (`removeDiem`)
-```
-    bool removeDiem(string mssv, string maLop) {
-        SinhVien* sv = findSinhVienByMSSV(mssv);
-        if sv == NULL then return false;
-        
-        // Duyệt danh sách điểm để tìm điểm cần xoá (theo mã lớp)
-        Node* current = sv->getDanhSachDiem().getHead();
-        while current != NULL do {
-            if current->data->getMaLop() == maLop then {
-                KetQuaHocTap* kq = current->data;
-                sv->getDanhSachDiem().remove(kq);
-                delete kq;
-                return true;
-            }
-            current = current->next;
-        }
-        return false;
-    }
-```
-- Chú thích:
-    + Các đối tượng: `SinhVien`, `KetQuaHocTap`.
-    + Các hàm được gọi:
-        + `findSinhVienByMSSV`, `sv->getDanhSachDiem().getHead()`, `current->data->getMaLop()`.
-        + `sv->getDanhSachDiem().remove(kq)`: Hàm của danh sách liên kết điểm, dùng để ngắt kết nối nút chứa điểm cần xóa.
-- Độ phức tạp:
-        + Thời gian: Trung bình $O(M)$. (Với $M$ là số học phần một sinh viên đã học. Phải tìm kiếm mã lớp trong danh sách điểm có kích thước $M$ của sinh viên đó để xoá).
-        + Không gian: $O(1)$.
-
-#### d. Một số hàm phụ trợ
-```
-    string xepLoaiDiemChu(float diemHP) {
-        if diemHP >= 8.5 then return "A";
-        if diemHP >= 8.0 then return "B+";
-        if diemHP >= 7.0 then return "B";
-        if diemHP >= 6.5 then return "C+";
-        if diemHP >= 5.5 then return "C";
-        if diemHP >= 5.0 then return "D+";
-        if diemHP >= 4.0 then return "D";
-        return "F";
-    }
-
-    float quyDoiHe4(float diemHP) {
-        if diemHP >= 8.5 then return 4.0;
-        if diemHP >= 8.0 then return 3.5;
-        if diemHP >= 7.0 then return 3.0;
-        if diemHP >= 6.5 then return 2.5;
-        if diemHP >= 5.5 then return 2.0;
-        if diemHP >= 5.0 then return 1.5;
-        if diemHP >= 4.0 then return 1.0;
-        return 0.0;
-    }
-```
-- Độ phức tạp:
-        + Thời gian: $O(1)$.
-        + Không gian: $O(1)$.
+---
 
 ## 2. Module Chiết Xuất & Hiển Thị Thông Tin
-### 2.1. Chức năng tra cứu & hiển thị bảng điểm cá nhân (`displayBangDiemCaNhan`)
-```
+
+### 2.1. Tra cứu Bảng điểm cá nhân (`displayBangDiemCaNhan`)
+
+**1. Mục đích:**
+Kết xuất toàn bộ lịch sử học tập của một cá nhân dưới dạng giao diện bảng biểu, bao gồm các điểm thành phần, điểm tổng kết hệ số 10, hệ số 4 và điểm chữ.
+
+**2. Đầu vào (Input):**
+- `mssv`: Mã số sinh viên.
+
+**3. Đầu ra (Output):**
+- In bảng điểm chi tiết ra Console. Hàm không có giá trị trả về (`void`).
+
+**4. Mã giả (Pseudocode):**
+```cpp
     void displayBangDiemCaNhan(string mssv) {
         SinhVien* sv = findSinhVienByMSSV(mssv);
-        if sv == NULL then {
-            // Thông báo không tìm thấy sinh viên
-            return;
-        }
+        if sv == NULL then return;
 
-        // 1. In tiêu đề và thông tin sinh viên
-
-        // 2. Lấy danh sách điểm của sinh viên
+        // In phần mở đầu (Tiêu đề bảng, MSSV, Họ Tên)
+        
         Node* current = sv->getDanhSachDiem().getHead();
-        if current == NULL then {
-            // Thông báo chưa có dữ liệu điểm
-        }
-
-        // 3. Duyệt từng nút điểm để in thông tin chi tiết
         while current != NULL do {
             KetQuaHocTap* kq = current->data;
-            HocPhan* hp = findHocPhanByMa(kq->getMaHP());
+            // Giải tham chiếu để lấy tên học phần, số tín chỉ
+            HocPhan* hp = findHocPhanByMa(kq->getMaHP()); 
             
-            string tenHP = "N/A";
-            int stc = 0;
-            if hp != NULL then {
-                tenHP = hp->getTenHP();
-                stc = hp->getSoTinChi();
-            }
-
-            // In thông tin (một dòng) điểm chi tiết của sinh viên
+            // In định dạng cho 1 dòng dữ liệu (Mã lớp, Mã HP, Tên HP, Các cột điểm...)
             
             current = current->next;
         }
-        // 4. In đường viền đóng bảng điểm
+        
+        // In phần kết thúc (Đóng bảng)
     }
 ```
-- Chú thích:
-    + Các đối tượng: `SinhVien`, `Node<KetQuaHocTap*>`, `KetQuaHocTap`, `HocPhan`.
-    + Các hàm được gọi:
-        + `findSinhVienByMSSV` (xem 1.1.d.).
-        + `findHocPhanByMa` (xem 1.3.d.).
-        + `sv->getDanhSachDiem().getHead()`: Truy xuất nút đầu tiên trong Linked List danh sách điểm của sinh viên.
-- Độ phức tạp:
-        + Thời gian: Trung bình $O(M)$. (Hàm thực hiện một vòng lặp duyệt qua đúng $M$ môn học của sinh viên. Bên trong vòng lặp gọi các hàm với chi phí $O(1)$ trung bình).
-        + Không gian: $O(1)$ (In trực tiếp ra màn hình, không dùng cấu trúc dữ liệu lưu trữ phụ).
 
-### 2.2. Chức năng hiển thị bảng điểm của Lớp HP (`displayBangDiemLopHP`)
-```
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(M)$. Hàm thực thi một vòng lặp duyệt liên tục qua $M$ kết quả học tập của cá nhân. Ở mỗi bước, việc truy xuất tên học phần `findHocPhanByMa` trực tiếp từ Bảng băm tốn chi phí hằng số $O(1)$.
+- **Độ phức tạp không gian:** $O(1)$. Quá trình xử lý chuỗi và in được đẩy thẳng ra bộ đệm stdout.
+
+---
+
+### 2.2. Hiển thị Bảng điểm Lớp Học Phần (`displayBangDiemLopHP`)
+
+**1. Mục đích:**
+In báo cáo danh sách điểm của toàn bộ sinh viên trực thuộc một Lớp Học Phần.
+
+**2. Đầu vào (Input):**
+- `maLop`: Mã lớp học phần.
+
+**3. Đầu ra (Output):**
+- Bảng danh sách điểm xuất ra Console. (`void`).
+
+**4. Mã giả (Pseudocode):**
+```cpp
     void displayBangDiemLopHP(string maLop) {
         LopHocPhan* lhp = findLopHocPhanByMa(maLop);
-        if lhp == NULL then {
-            // Thông báo không tìm thấy lớp học phần
-            return;
-        }
+        if lhp == NULL then return;
 
-        HocPhan* hp = findHocPhanByMa(lhp->getMaHP());
-        string tenHP = "N/A";
-        if hp != NULL then {
-            tenHP = hp->getTenHP();
-        }
-
-        // 1. In tiêu đề của lớp học phần
-
-        // 2. Duyệt qua danh sách sinh viên đăng ký trong lớp học phần
-        Node* currentSV = lhp->getDanhSachSinhVien().getHead();     // Node sinh viên trong lớp
-        if currentSV == NULL then {
-            // Thông báo chưa có sinh viên
-        }
-
+        // Lấy danh sách SV nằm trong sự quản lý của lớp học phần
+        Node* currentSV = lhp->getDanhSachSinhVien().getHead();
+        
         while currentSV != NULL do {
             SinhVien* sv = currentSV->data;
             
-            // Vòng lặp trong: Tra cứu KetQuaHocTap của lớp học phần này trong danh sách điểm của sinh viên
+            // Tìm điểm của sinh viên trong học phần này
             KetQuaHocTap* kqTarget = NULL;
-            Node* kqNode = sv->getDanhSachDiem().getHead();     // Node kết quả học tập của sinh viên
+            Node* kqNode = sv->getDanhSachDiem().getHead();
+            
             while kqNode != NULL do {
                 if kqNode->data->getMaLop() == maLop then {
                     kqTarget = kqNode->data;
-                    break;  // Đã tìm thấy điểm
+                    break;
                 }
                 kqNode = kqNode->next;
             }
 
-            string hoTen = sv->getHoTen();
-
-            // 3. In kết quả nếu tìm thấy điểm
-            if kqTarget != NULL then {
-                // In kết quả cho một dòng
-            }
-
+            // In thông tin 1 sinh viên (MSSV, Họ tên, Điểm QTr, Điểm CK, ...)
+            
             currentSV = currentSV->next;
         }
-        // 4. In đường viền đóng bảng điểm
     }
 ```
-- Chú thích:
-    + Các đối tượng: `LopHocPhan`, `Node<SinhVien*>`, `SinhVien`, `Node<KetQuaHocTap*>`, `KetQuaHocTap`, `HocPhan`.
-    + Các hàm được gọi:
-        + `findLopHocPhanByMa` (xem 1.4.e.).
-        + `findHocPhanByMa` (xem 1.3.d.).
-        + `lhp->getDanhSachSinhVien().getHead()`: Truy xuất danh sách sinh viên đăng ký học lớp học phần này.
-        + `sv->getDanhSachDiem().getHead()`: Truy xuất danh sách điểm của sinh viên hiện tại.
-- Độ phức tạp:
-        + Thời gian: $O(KM)$. (Có $K$ sinh viên trong lớp, ứng với mỗi sinh viên, vòng lặp trong phải duyệt qua danh sách $M$ (số học phần trung bình một sinh viên đã học) học phần của sinh viên đó để tìm đúng điểm của lớp này).
-        + Không gian: $O(1)$ (In trực tiếp ra màn hình, không dùng cấu trúc dữ liệu lưu trữ phụ).
+
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(K \times M)$. Với $K$ là số lượng sinh viên trong lớp học phần, vòng lặp ngoài cùng chạy $K$ lần. Đối với mỗi sinh viên được xét, thuật toán bắt buộc phải quét dọc theo danh sách điểm cá nhân của họ gồm $M$ bản ghi (số học phần trung bình một sinh viên đã học) để lấy được đúng kết quả ứng với lớp này.
+- **Độ phức tạp không gian:** $O(1)$. Xử lý trích xuất tại chỗ trên các danh sách liên kết.
+
+---
 
 ## 3. Module Thống Kê & Đánh Giá Học Lực
-### 3.1. Chức năng tính GPA & CPA (calculateGPAAndCPA)
-*(Lưu ý: Dùng danh sách phụ trợ `listCPA` để lọc môn học lại và lấy điểm cao nhất để cộng dồn cho CPA).*
-```
-    ADT GPA_CPA {
-        float gpa;
-        float cpa;
 
-        GPA_CPA(float g, float c) {
-            gpa = g;
-            cpa = c;
-        }
-    }
+### 3.1. Tính GPA & CPA (`calculateGPAAndCPA`)
 
+**1. Mục đích:**
+Tính toán Điểm trung bình học kỳ (GPA) chỉ áp dụng cho một học kỳ duy nhất, và Điểm trung bình tích lũy toàn khoá (CPA). Chức năng này bao gồm cơ chế lọc và loại bỏ điểm của những môn học lại (chỉ tính điểm cao nhất).
+
+**2. Đầu vào (Input):**
+- `mssv`: Mã số sinh viên.
+- `hocKy`: Học kỳ truy vấn (Ví dụ: `2023.1`).
+
+**3. Đầu ra (Output):**
+- Giá trị bộ đôi (tuple/pair) `(gpa, cpa)`.
+
+**4. Mã giả (Pseudocode):**
+```cpp
     GPA_CPA calculateGPAAndCPA(string mssv, string hocKy) {
         SinhVien* sv = findSinhVienByMSSV(mssv);
-        if sv == NULL then return GPA_CPA(0.0,0.0);
+        if sv == NULL then return (0.0, 0.0);
 
         float sumGPA = 0.0, sumCPA = 0.0;
         int creditsGPA = 0, creditsCPA = 0;
 
-        // Khởi tạo danh sách phụ trợ để lọc môn học lại cho CPA
-        LinkedList listCPA;     // Khởi tạo trên Stack, với Node chứa kết quả học tập 
+        // Danh sách liên kết phụ trợ dùng để lọc bỏ môn học lại
+        LinkedList listCPA;     
         Node* current = sv->getDanhSachDiem().getHead();
 
-        // Vòng lặp 1: Tính GPA và lọc dữ liệu cho CPA
+        // [Giai đoạn 1]: Tính GPA & Gom nhóm học phần cho CPA
         while current != NULL do {
             KetQuaHocTap* kq = current->data;
             HocPhan* hp = findHocPhanByMa(kq->getMaHP());
             LopHocPhan* lhp = findLopHocPhanByMa(kq->getMaLop());
 
-            if hp != NULL AND lhp != NULL then {    // Cần tra cứu và giải tham chiếu với hp và lhp
+            if hp != NULL AND lhp != NULL then {
                 int stc = hp->getSoTinChi();
                 float diem4 = kq->getThang4();
 
-                // 1. Xử lý GPA (Chỉ cộng dồn nếu khớp học kỳ)
+                // a. Xử lý GPA (Cộng dồn nếu khớp với học kỳ truy vấn)
                 if lhp->getHocKy() == hocKy then {
                     sumGPA = sumGPA + (diem4 * stc);
                     creditsGPA = creditsGPA + stc;
                 }
 
-                // 2. Xử lý CPA (Lọc trùng lặp, chỉ lấy điểm cao nhất)
+                // b. Xử lý CPA (Lọc học phần học lại, lấy điểm cao nhất)
                 bool foundInCPA = false;
-                Node* cpaNode = listCPA.getHead();  // Node chứa kết quả học tập
+                Node* cpaNode = listCPA.getHead();
+                
                 while cpaNode != NULL do {
                     if cpaNode->data->getMaHP() == kq->getMaHP() then {
                         foundInCPA = true;
-
-                        // Nếu môn này đã có trong listCPA nhưng điểm đang xét ở vòng ngoài cao hơn thì cập nhật
+                        // Ghi đè con trỏ nếu điểm vòng ngoài cao hơn
                         if diem4 > cpaNode->data->getThang4() then {
-                            cpaNode->data = kq;     // Đưa con trỏ trỏ sang nơi khác (điểm cao hơn)
+                            cpaNode->data = kq;     
                         }
-                        break;  // Thoát vòng lặp con
+                        break;  
                     }
                     cpaNode = cpaNode->next;
                 }
 
-                // Nếu duyệt hết listCPA mà chưa có môn này thì thêm mới vào
+                // Nếu là học phần hoàn toàn mới, đẩy vào danh sách
                 if foundInCPA == false then {
-                    listCPA.insertAtHead(kq);   // Ở đây chọn head hay tail cũng không sai
+                    listCPA.insertAtHead(kq);   
                 }
             }
             current = current->next;
         }
 
-        // Vòng lặp 2: Tính tổng CPA từ danh sách đã lọc
-        Node* cpaNode = listCPA.getHead();  // Node chứa KetQuaHocTap
+        // [Giai đoạn 2]: Tính tổng CPA thông qua danh sách đã lọc sạch
+        Node* cpaNode = listCPA.getHead();
         while cpaNode != NULL do {
             KetQuaHocTap* kqCPA = cpaNode->data;
             HocPhan* hpCPA = findHocPhanByMa(kqCPA->getMaHP());
             
-            // kqCPA và hpCPA đã được đảm bảo khác NULL vì biến `current` và `hp` được thiết lập
             int stc = hpCPA->getSoTinChi();
             sumCPA = sumCPA + (kqCPA->getThang4() * stc);
             creditsCPA = creditsCPA + stc;
@@ -642,66 +468,38 @@
             cpaNode = cpaNode->next;
         }
 
-        // Tính toán kết quả cuối cùng (tránh lỗi chia cho 0)
-        float gpa = 0.0;
-        if creditsGPA > 0 then gpa = sumGPA / creditsGPA;
-
-        float cpa = 0.0;
-        if creditsCPA > 0 then cpa = sumCPA / creditsCPA;
+        // [Giai đoạn 3]: Đóng gói kết quả (Chống lỗi Division by Zero)
+        float gpa = (creditsGPA > 0) ? (sumGPA / creditsGPA) : 0.0;
+        float cpa = (creditsCPA > 0) ? (sumCPA / creditsCPA) : 0.0;
 
         // Giải phóng danh sách phụ trợ
-        listCPA.clear();    // Hàm clear để xoá các Node trên Heap
+        listCPA.clear();
 
-        GPA_CPA result = GPA_CPA(gpa, cpa);
-        return result;
+        return (gpa, cpa);
     }
 ```
-- Chú thích:
-    + Các đối tượng: `SinhVien`, `KetQuaHocTap`, `HocPhan`, `LopHocPhan`, `LinkedList<KetQuaHocTap*>` (Danh sách phụ trợ).
-    + Các hàm được gọi:
-        + `findSinhVienByMSSV`, `findHocPhanByMa`, `findLopHocPhanByMa`: Các hàm tra cứu phụ trợ.
-        + `sv->getDanhSachDiem().getHead()`: Lấy danh sách điểm gốc của sinh viên.
-        + `listCPA.insertAtHead(kq)`: Thêm con trỏ điểm vào danh sách phụ trợ.
-- Độ phức tạp:
-        + Thời gian: $O(M^2)$.
-        Giải thích: Vòng lặp 1 duyệt qua $M$ điểm gốc. Tại mỗi bước, vòng lặp nhỏ bên trong phải lội qua danh sách phụ trợ listCPA (kích thước $O(M)$) để tìm môn học lại; cho ra tác vụ với chi phí $O(M^2)$. Vòng lặp 2 duyệt lại listCPA với chi phí $O(M)$. Phép toán chi phối toàn hàm là $O(M^2)$.
-        + Không gian: $O(M)$.
-        Giải thích: Khởi tạo danh sách phụ trợ listCPA trên Stack và Heap. Trong trường hợp sinh viên không học lại môn nào, danh sách này chứa đúng $M$ nút kết quả học tập.
 
-### 3.2. Chức năng Đánh giá học lực
-#### a. Hiển thị Thống kê Học lực (`displayThongKeHocLuc`)
-```
-    // Dùng đến ADT GPA_CPA
-    void displayThongKeHocLuc(string mssv, string hocKy) {
-        SinhVien* sv = findSinhVienByMSSV(mssv);
-        if sv == NULL then {
-            // Thông báo không tìm thấy sinh viên
-            return;
-        }
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(M^2)$. 
+  - *Giải thích:* [Giai đoạn 1] duyệt qua $M$ kết quả học tập gốc. Tại mỗi kết quả, thuật toán lội qua danh sách phụ trợ `listCPA` (kích thước tối đa là $M$) để kiểm tra sự trùng lặp mã học phần $\rightarrow$ Hai vòng lặp lồng nhau tiêu thụ $O(M^2)$. [Giai đoạn 2] duyệt một lần qua danh sách đã lọc, tốn $O(M)$. Tổng thể chi phí chi phối là $O(M^2)$.
+- **Độ phức tạp không gian:** $O(M)$.
+  - *Giải thích:* Khởi tạo danh sách liên kết phụ trợ `listCPA` lưu trữ tối đa $M$ con trỏ để giải quyết triệt để vấn đề sinh viên học lại.
 
-        // Gọi hàm tính toán
-        GPA_CPA result = calculateGPAAndCPA(mssv, hocKy);
-        float gpa = result.gpa;
-        float cpa = result.cpa;
-        
-        // Gọi hàm xếp loại
-        string hocLuc = evaluateHocLuc(cpa);
+---
 
-        // In các kết quả ra màn hình
-    }
-```
-- Chú thích:
-    + Các đối tượng: `SinhVien`.
-    + Các hàm được gọi:
-        + `findSinhVienByMSSV`: Hàm tra cứu sinh viên.
-        + `calculateGPAAndCPA`: Hàm tính toán điểm ở mục 3.a.
-        + `evaluateHocLuc`: Hàm phụ trợ xếp loại học lực.
-- Độ phức tạp:
-        + Thời gian: $O(M^2)$ (Phụ thuộc hoàn toàn vào hàm `calculateGPAAndCPA` được gọi bên trong, hàm xếp loại `evaluateHocLuc` chỉ có chi phí $O(1)$).
-        + Không gian: $O(M)$ (Độ phức tạp không gian kế thừa từ hàm tính điểm do phải tạo list phụ trợ).
+### 3.2. Đánh giá xếp loại học lực (`evaluateHocLuc` & `displayThongKeHocLuc`)
 
-#### b. Hàm hỗ trợ lấy chuỗi xếp loại từ CPA (evaluateHocLuc) 
-```
+**1. Mục đích:**
+Dựa trên điểm CPA đã tính toán, ánh xạ sang mức xếp loại học lực chuẩn (Xuất sắc, Giỏi, Khá...) và hiển thị tổng hợp ra màn hình.
+
+**2. Đầu vào (Input):**
+- `mssv` và `hocKy`.
+
+**3. Đầu ra (Output):**
+- In kết quả thống kê.
+
+**4. Mã giả (Pseudocode):**
+```cpp
     string evaluateHocLuc(float cpa) {
         if cpa >= 3.6 then return "Xuat sac";
         if cpa >= 3.2 then return "Gioi";
@@ -709,7 +507,24 @@
         if cpa >= 2.0 then return "Trung binh";
         return "Yeu";
     }
+
+    void displayThongKeHocLuc(string mssv, string hocKy) {
+        SinhVien* sv = findSinhVienByMSSV(mssv);
+        if sv == NULL then return;
+
+        // Trích xuất CPA
+        GPA_CPA result = calculateGPAAndCPA(mssv, hocKy);
+        
+        // Nhận nhãn học lực
+        string hocLuc = evaluateHocLuc(result.cpa);
+
+        // Xuất kết quả
+        print("GPA: ", result.gpa);
+        print("CPA: ", result.cpa);
+        print("Hoc luc: ", hocLuc);
+    }
 ```
-- Độ phức tạp:
-        + Thời gian: $O(1)$.
-        + Không gian: $O(1)$.
+
+**5. Phân tích độ phức tạp:**
+- **Độ phức tạp thời gian:** $O(M^2)$. Khâu xử lý `if/else` để đánh giá học lực chỉ tốn $O(1)$. Tuy nhiên toàn hàm phụ thuộc hoàn toàn vào quá trình tính toán nặng nề `calculateGPAAndCPA` gọi ở bên trong.
+- **Độ phức tạp không gian:** $O(M)$. Phụ thuộc vào quá trình cấp phát danh sách phụ trợ của `calculateGPAAndCPA`.
