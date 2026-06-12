@@ -109,9 +109,98 @@ int main(int argc, const char * argv[]) {
                     if (subChoice == 0) break;
 
                     if (subChoice == 1) {
-                        std::cout << "Chuc nang quan ly Hoc phan dang duoc cap nhat..." << std::endl;
+                        int hpChoice = -1;
+                        while (true) {
+                            std::cout << "\n--- Quan Ly Hoc Phan ---\n1. Them hoc phan\n2. Cap nhat hoc phan\n3. Xoa hoc phan\n4. Danh sach hoc phan\n0. Quay lai\nNhap lua chon: ";
+                            if (!(std::cin >> hpChoice)) {
+                                std::cout << "Loi nhap lieu!\n";
+                                clearInputBuffer(); continue;
+                            }
+                            clearInputBuffer();
+                            if (hpChoice == 0) break;
+                            if (hpChoice == 1) {
+                                std::string ma, ten; int stc;
+                                std::cout << "Ma HP: "; std::getline(std::cin, ma);
+                                std::cout << "Ten HP: "; std::getline(std::cin, ten);
+                                std::cout << "So TC: "; std::cin >> stc; clearInputBuffer();
+                                HocPhan* hp = new HocPhan(ma, ten, stc, stc);
+                                if (manager.addHocPhan(hp)) std::cout << "Them thanh cong!\n";
+                                else { std::cout << "Ma HP da ton tai!\n"; delete hp; }
+                            } else if (hpChoice == 2) {
+                                std::string ma, ten; int stc;
+                                std::cout << "Ma HP can sua: "; std::getline(std::cin, ma);
+                                HocPhan* oldHp = manager.findHocPhanByMa(ma);
+                                if (oldHp) {
+                                    std::cout << "Ten HP moi: "; std::getline(std::cin, ten);
+                                    std::cout << "So TC moi: "; std::cin >> stc; clearInputBuffer();
+                                    oldHp->setTenHP(ten); oldHp->setSoTinChi(stc);
+                                    std::cout << "Cap nhat thanh cong!\n";
+                                } else std::cout << "Khong tim thay Ma HP!\n";
+                            } else if (hpChoice == 3) {
+                                std::string ma;
+                                std::cout << "Ma HP can xoa: "; std::getline(std::cin, ma);
+                                if (manager.removeHocPhan(ma)) std::cout << "Xoa thanh cong!\n";
+                                else std::cout << "Khong tim thay Ma HP!\n";
+                            } else if (hpChoice == 4) {
+                                LinkedList<HocPhan*>* list = manager.getAllHocPhan();
+                                if (!list || list->isEmpty()) std::cout << "Danh sach trong.\n";
+                                else {
+                                    Node<HocPhan*>* curr = list->getHead();
+                                    while(curr) {
+                                        std::cout << curr->data->getMaHP() << " - " << curr->data->getTenHP() << " (" << curr->data->getSoTinChi() << " TC)\n";
+                                        curr = curr->next;
+                                    }
+                                }
+                                if (list) delete list;
+                            }
+                        }
                     } else if (subChoice == 2) {
-                        std::cout << "Chuc nang quan ly Lop hoc phan dang duoc cap nhat..." << std::endl;
+                        int lhpChoice = -1;
+                        while (true) {
+                            std::cout << "\n--- Quan Ly Lop Hoc Phan ---\n1. Mo lop\n2. Xoa lop\n3. Dang ky SV\n4. Huy dang ky SV\n5. Danh sach LHP\n0. Quay lai\nNhap lua chon: ";
+                            if (!(std::cin >> lhpChoice)) {
+                                std::cout << "Loi nhap lieu!\n"; clearInputBuffer(); continue;
+                            }
+                            clearInputBuffer();
+                            if (lhpChoice == 0) break;
+                            if (lhpChoice == 1) {
+                                std::string malop, mahp, hocky;
+                                std::cout << "Ma Lop: "; std::getline(std::cin, malop);
+                                std::cout << "Ma HP: "; std::getline(std::cin, mahp);
+                                std::cout << "Hoc ky: "; std::getline(std::cin, hocky);
+                                LopHocPhan* lhp = new LopHocPhan(malop, mahp, hocky);
+                                if (manager.addLopHocPhan(lhp)) std::cout << "Mo lop thanh cong!\n";
+                                else { std::cout << "Ma Lop da ton tai!\n"; delete lhp; }
+                            } else if (lhpChoice == 2) {
+                                std::string malop;
+                                std::cout << "Ma Lop can xoa: "; std::getline(std::cin, malop);
+                                if (manager.removeLopHocPhan(malop)) std::cout << "Xoa thanh cong!\n";
+                                else std::cout << "Khong tim thay Ma Lop!\n";
+                            } else if (lhpChoice == 3) {
+                                std::string malop, mssv;
+                                std::cout << "Ma Lop: "; std::getline(std::cin, malop);
+                                std::cout << "MSSV: "; std::getline(std::cin, mssv);
+                                if (manager.registerSinhVienToLop(mssv, malop)) std::cout << "Dang ky thanh cong!\n";
+                                else std::cout << "Dang ky that bai (Loi MSSV/MaLop hoac da dang ky)!\n";
+                            } else if (lhpChoice == 4) {
+                                std::string malop, mssv;
+                                std::cout << "Ma Lop: "; std::getline(std::cin, malop);
+                                std::cout << "MSSV: "; std::getline(std::cin, mssv);
+                                if (manager.unregisterSinhVienFromLop(mssv, malop)) std::cout << "Huy dang ky thanh cong!\n";
+                                else std::cout << "Huy that bai!\n";
+                            } else if (lhpChoice == 5) {
+                                LinkedList<LopHocPhan*>* list = manager.getAllLopHocPhan();
+                                if (!list || list->isEmpty()) std::cout << "Danh sach trong.\n";
+                                else {
+                                    Node<LopHocPhan*>* curr = list->getHead();
+                                    while(curr) {
+                                        std::cout << "Lop: " << curr->data->getMaLop() << " | HP: " << curr->data->getMaHP() << " | HK: " << curr->data->getHocKy() << "\n";
+                                        curr = curr->next;
+                                    }
+                                }
+                                if (list) delete list;
+                            }
+                        }
                     } else if (subChoice == 3) {
                         std::cout << "\nDanh sach toan bo sinh vien (" << manager.getStudentCount() << " records):" << std::endl;
                         manager.printAll();
@@ -136,9 +225,26 @@ int main(int argc, const char * argv[]) {
                     if (subChoice == 0) break;
 
                     if (subChoice == 1) {
-                        std::cout << "Chuc nang Nhap diem dang duoc cap nhat..." << std::endl;
+                        std::string mssv, malop, mahp; float qtr, ck, trongso;
+                        std::cout << "MSSV: "; std::getline(std::cin, mssv);
+                        std::cout << "Ma Lop: "; std::getline(std::cin, malop);
+                        std::cout << "Ma HP: "; std::getline(std::cin, mahp);
+                        std::cout << "Diem QTr: "; std::cin >> qtr;
+                        std::cout << "Diem CK: "; std::cin >> ck;
+                        std::cout << "Trong so QTr (vd 0.3): "; std::cin >> trongso;
+                        clearInputBuffer();
+                        if (manager.addDiem(mssv, malop, mahp, qtr, ck, trongso)) std::cout << "Nhap diem thanh cong!\n";
+                        else std::cout << "Nhap diem that bai (Sai MSSV, hoac da co diem)!\n";
                     } else if (subChoice == 2) {
-                        std::cout << "Chuc nang Cap nhat / Sua diem dang duoc cap nhat..." << std::endl;
+                        std::string mssv, malop; float qtr, ck, trongso;
+                        std::cout << "MSSV: "; std::getline(std::cin, mssv);
+                        std::cout << "Ma Lop can sua diem: "; std::getline(std::cin, malop);
+                        std::cout << "Diem QTr moi: "; std::cin >> qtr;
+                        std::cout << "Diem CK moi: "; std::cin >> ck;
+                        std::cout << "Trong so QTr (vd 0.3): "; std::cin >> trongso;
+                        clearInputBuffer();
+                        if (manager.updateDiem(mssv, malop, qtr, ck, trongso)) std::cout << "Cap nhat diem thanh cong!\n";
+                        else std::cout << "Cap nhat that bai!\n";
                     } else {
                         std::cout << "Loi: Lua chon khong hop le!" << std::endl;
                     }
