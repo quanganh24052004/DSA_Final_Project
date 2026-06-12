@@ -53,7 +53,8 @@ public:
 
         size_t loadedCount = 0;
         while (std::getline(file, line)) {
-            if (line.empty() || line[0] == '\r') continue;
+            if (!line.empty() && line.back() == '\r') line.pop_back();
+            if (line.empty()) continue;
             std::vector<std::string> fields = parseCSVLine(line);
             if (fields.size() < 3) continue;
 
@@ -79,7 +80,8 @@ public:
 
         size_t loadedCount = 0;
         while (std::getline(file, line)) {
-            if (line.empty() || line[0] == '\r') continue;
+            if (!line.empty() && line.back() == '\r') line.pop_back();
+            if (line.empty()) continue;
             std::vector<std::string> fields = parseCSVLine(line);
             if (fields.size() < 4) continue; 
 
@@ -107,7 +109,8 @@ public:
 
         size_t loadedCount = 0;
         while (std::getline(file, line)) {
-            if (line.empty() || line[0] == '\r') continue;
+            if (!line.empty() && line.back() == '\r') line.pop_back();
+            if (line.empty()) continue;
             std::vector<std::string> fields = parseCSVLine(line);
             if (fields.size() < 17) continue;
 
@@ -159,7 +162,8 @@ public:
 
         size_t loadedCount = 0;
         while (std::getline(file, line)) {
-            if (line.empty() || line[0] == '\r') continue;
+            if (!line.empty() && line.back() == '\r') line.pop_back();
+            if (line.empty()) continue;
             std::vector<std::string> fields = parseCSVLine(line);
             
             // Expected format could vary, but according to user's real data:
