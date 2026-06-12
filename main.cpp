@@ -467,13 +467,13 @@ int main(int argc, const char * argv[]) {
                         if (loadSaveChoice == 1) {
                             std::cout << "Dang tai du lieu mac dinh..." << std::endl;
                             manager.cleanUp(); // Reset truoc khi tai
-                            FileHandler::loadNganhHoc("../NganhHoc.csv", manager);
-                            FileHandler::loadHocPhan("../HocPhan.csv", manager);
-                            FileHandler::loadSinhVien("../DanhSachSinhVien.csv", manager);
-                            FileHandler::loadDiem("../Diem_DaiSo.csv", manager, "MI1141");
-                            FileHandler::loadDiem("../Diem_GT1.csv", manager, "MI1111");
-                            FileHandler::loadDiem("../Diem_TinHoc.csv", manager, "IT1110");
-                            FileHandler::loadDiem("../Diem_Triet.csv", manager, "LL1111");
+                            FileHandler::loadNganhHoc("../data/NganhHoc.csv", manager);
+                            FileHandler::loadHocPhan("../data/HocPhan.csv", manager);
+                            FileHandler::loadSinhVien("../data/DanhSachSinhVien.csv", manager);
+                            FileHandler::loadDiem("../data/Diem_DaiSo.csv", manager, "MI1141");
+                            FileHandler::loadDiem("../data/Diem_GT1.csv", manager, "MI1111");
+                            FileHandler::loadDiem("../data/Diem_TinHoc.csv", manager, "IT1110");
+                            FileHandler::loadDiem("../data/Diem_Triet.csv", manager, "LL1111");
                         } else if (loadSaveChoice == 2) {
                             int fileType = -1;
                             std::cout << "\n--- CHON LOAI DU LIEU MUON TAI ---" << std::endl;
@@ -492,7 +492,7 @@ int main(int argc, const char * argv[]) {
 
                             std::string filePath;
                             std::cout << "Nhap duong dan file (.csv)\n";
-                            std::cout << "(Meo: Neu ban dang chay tu thu muc build, ban can dung ../ truoc ten file, VD: ../NganhHoc.csv): ";
+                            std::cout << "(Meo: Neu ban dang chay tu thu muc build, ban can dung ../data/ truoc ten file, VD: ../data/NganhHoc.csv): ";
                             std::getline(std::cin, filePath);
 
                             switch (fileType) {
@@ -517,11 +517,16 @@ int main(int argc, const char * argv[]) {
                                     break;
                             }
                         } else if (loadSaveChoice == 3) {
-                            std::cout << "Dang luu toan bo du lieu ra file..." << std::endl;
-                            FileHandler::saveNganhHoc("../NganhHoc_Export.csv", manager);
-                            FileHandler::saveHocPhan("../HocPhan_Export.csv", manager);
-                            FileHandler::saveSinhVien("../DanhSachSinhVien_Export.csv", manager);
-                            FileHandler::saveDiem("../Diem_Export.csv", manager);
+                            std::cout << "Dang luu toan bo du lieu ra file trong thu muc ../export/ ..." << std::endl;
+#ifdef _WIN32
+                            system("mkdir ..\\export 2> nul");
+#else
+                            system("mkdir -p ../export");
+#endif
+                            FileHandler::saveNganhHoc("../export/NganhHoc_Export.csv", manager);
+                            FileHandler::saveHocPhan("../export/HocPhan_Export.csv", manager);
+                            FileHandler::saveSinhVien("../export/DanhSachSinhVien_Export.csv", manager);
+                            FileHandler::saveDiem("../export/Diem_Export.csv", manager);
                         } else {
                             std::cout << "Loi: Lua chon khong hop le!" << std::endl;
                         }
