@@ -32,10 +32,15 @@ public:
     void setHocKy(const std::string& val) { hocKy = val; }
 
     // Sinh Vien Management within Class
-    void addSinhVien(SinhVien* sv) {
-        if (sv) {
-            danhSachSinhVien.insertAtTail(sv);
+    bool addSinhVien(SinhVien* sv) {
+        if (!sv) return false;
+        Node<SinhVien*>* current = danhSachSinhVien.getHead();
+        while (current != nullptr) {
+            if (current->data == sv) return false;
+            current = current->next;
         }
+        danhSachSinhVien.insertAtTail(sv);
+        return true;
     }
 
     // Removing by pointer

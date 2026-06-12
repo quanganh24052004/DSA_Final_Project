@@ -62,8 +62,16 @@ public:
         }
     }
 
-    void themKetQuaHocTap(KetQuaHocTap* kq) {
+    bool themKetQuaHocTap(KetQuaHocTap* kq) {
+        Node<KetQuaHocTap*>* current = danhSachDiem.getHead();
+        while (current != nullptr) {
+            if (current->data->getMaLop() == kq->getMaLop()) {
+                return false;
+            }
+            current = current->next;
+        }
         danhSachDiem.insertAtTail(kq);
+        return true;
     }
 
     // Getters

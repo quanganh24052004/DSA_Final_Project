@@ -203,8 +203,7 @@ public:
         SinhVien* sv = findSinhVienByMSSV(mssv);
         LopHocPhan* lhp = findLopHocPhanByMa(maLop);
         if (sv && lhp) {
-            lhp->addSinhVien(sv);
-            return true;
+            return lhp->addSinhVien(sv);
         }
         return false;
     }
@@ -247,8 +246,12 @@ public:
         
         float diemHP = diemQTr * trongSoQTr + diemCK * (1.0f - trongSoQTr);
         KetQuaHocTap* kq = new KetQuaHocTap(maLop, maHP, diemQTr, diemCK, diemHP, xepLoaiDiemChu(diemHP), quyDoiHe4(diemHP));
-        sv->themKetQuaHocTap(kq);
-        return true;
+        if (sv->themKetQuaHocTap(kq)) {
+            return true;
+        } else {
+            delete kq;
+            return false;
+        }
     }
 
     bool updateDiem(const std::string& mssv, const std::string& maLop, float diemQTrMoi, float diemCKMoi, float trongSoQTr = 0.3f) {
@@ -419,29 +422,59 @@ public:
         float sumGPA = 0.0f, sumCPA = 0.0f;
         int creditsGPA = 0, creditsCPA = 0;
 
+        LinkedList<KetQuaHocTap*> listCPA;
         Node<KetQuaHocTap*>* current = sv->getDanhSachDiem().getHead();
+
         while (current != nullptr) {
             KetQuaHocTap* kq = current->data;
             HocPhan* hp = findHocPhanByMa(kq->getMaHP());
             LopHocPhan* lhp = findLopHocPhanByMa(kq->getMaLop());
 
-            if (hp != nullptr) {
+            if (hp != nullptr && lhp != nullptr) {
                 int stc = hp->getSoTinChi();
                 float diem4 = kq->getThang4();
 
-                sumCPA += diem4 * stc;
-                creditsCPA += stc;
-
-                if (lhp != nullptr && lhp->getHocKy() == hocKy) {
+                if (lhp->getHocKy() == hocKy) {
                     sumGPA += diem4 * stc;
                     creditsGPA += stc;
+                }
+
+                bool foundInCPA = false;
+                Node<KetQuaHocTap*>* cpaNode = listCPA.getHead();
+                while (cpaNode != nullptr) {
+                    if (cpaNode->data->getMaHP() == kq->getMaHP()) {
+                        foundInCPA = true;
+                        if (diem4 > cpaNode->data->getThang4()) {
+                            cpaNode->data = kq;
+                        }
+                        break;
+                    }
+                    cpaNode = cpaNode->next;
+                }
+
+                if (!foundInCPA) {
+                    listCPA.insertAtHead(kq);
                 }
             }
             current = current->next;
         }
 
+        Node<KetQuaHocTap*>* cpaNode = listCPA.getHead();
+        while (cpaNode != nullptr) {
+            KetQuaHocTap* kqCPA = cpaNode->data;
+            HocPhan* hpCPA = findHocPhanByMa(kqCPA->getMaHP());
+            if (hpCPA) {
+                int stc = hpCPA->getSoTinChi();
+                sumCPA += kqCPA->getThang4() * stc;
+                creditsCPA += stc;
+            }
+            cpaNode = cpaNode->next;
+        }
+
         float gpa = (creditsGPA > 0) ? (sumGPA / creditsGPA) : 0.0f;
         float cpa = (creditsCPA > 0) ? (sumCPA / creditsCPA) : 0.0f;
+
+        listCPA.clear();
 
         return {gpa, cpa};
     }
